@@ -29,6 +29,10 @@ public class Airline {
     @NotBlank(message = "Description is mandatory")
     private String description;
 
+    @Column(nullable = false)
+    @NotBlank(message = "Owner is mandatory")
+    private String owner;
+
     @Embedded
     @Column(nullable = false)
     @NotNull(message = "Image is mandatory")
@@ -68,6 +72,7 @@ public class Airline {
         id = other.id;
         name = other.name;
         description = other.description;
+        owner = other.owner;
         image = (other.image == null) ? null : new Image(other.image);
     }
 
@@ -95,6 +100,14 @@ public class Airline {
         this.description = description;
     }
 
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
     public Image getImage() {
         return image;
     }
@@ -116,12 +129,13 @@ public class Airline {
         Airline airline = (Airline) other;
         return Objects.equals(name, airline.name)
                 && Objects.equals(description, airline.description)
+                && Objects.equals(owner, airline.owner)
                 && Objects.equals(image, airline.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, image);
+        return Objects.hash(name, description, owner, image);
     }
 
     @Override
@@ -130,6 +144,7 @@ public class Airline {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", owner='" + owner + '\'' +
                 ", image=" + image +
                 '}';
     }
@@ -161,6 +176,11 @@ public class Airline {
             return this;
         }
 
+        public Builder withOwner(String owner) {
+            Airline.this.owner = owner;
+            return this;
+        }
+
         public Builder withImage(Image image) {
             Airline.this.image = image;
             return this;
@@ -182,6 +202,9 @@ public class Airline {
             }
             if (other.description != null) {
                 Airline.this.description = other.description;
+            }
+            if (other.owner != null) {
+                Airline.this.owner = other.owner;
             }
             if (other.image != null) {
                 Airline.this.image = new Image(other.image);

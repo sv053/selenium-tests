@@ -57,6 +57,7 @@ public class AirlineServiceImplTest {
                 .withId(1L)
                 .withName("name")
                 .withDescription("description")
+                .withOwner("owner")
                 .withImage(new Image("foejfifw"))
                 .build();
     }
@@ -67,6 +68,7 @@ public class AirlineServiceImplTest {
                 .withId(1L)
                 .withName("name2")
                 .withDescription("description2")
+                .withOwner("owner2")
                 .withImage(new Image("fwfwefefwefef"))
                 .build();
     }
