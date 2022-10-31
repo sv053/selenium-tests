@@ -22,5 +22,9 @@ kubectl create -f mysql/mysql-deployment.yaml
 kubectl create -f user-service/user-service-secret.yaml
 kubectl create -f user-service/user-service-deployment.yaml
 
+# Auth service
+kubectl create -f auth-service/auth-service-secret.yaml
+kubectl create -f auth-service/auth-service-deployment.yaml 
+
 echo "Running tunnel. You can access the application on http://localhost/"
 minikube tunnel
