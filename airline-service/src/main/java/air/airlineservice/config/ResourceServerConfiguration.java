@@ -57,6 +57,10 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                     .permitAll()
                 .mvcMatchers("/airlines/**")
                     .authenticated()
+                .mvcMatchers(HttpMethod.GET,"/flights/**")
+                    .permitAll()
+                .mvcMatchers("/flights/**")
+                    .authenticated()
             .and()
             .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.NEVER);
