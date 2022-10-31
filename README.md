@@ -76,6 +76,12 @@ All the endpoints follow the REST API Resource naming conventions.
 * HTTP POST http://localhost/flights - create a new flight (autentication required)
 * HTTP PATCH http://localhost/flights/{id} - edit the flight with the specified ID (autentication required)
 
+### Tickets:
+
+* HTTP GET http://localhost/tickets - get all tickets
+* HTTP GET http://localhost/tickets/{id} - get the ticket with the specified ID
+* HTTP POST http://localhost/tickets - create a new ticket (autentication required)
+
 ## Screenshots
 #### Jenkins build:
 
