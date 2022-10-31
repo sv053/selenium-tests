@@ -50,7 +50,10 @@ public class UserControllerTest {
         newUserJson = "{" +
                 "\"email\": \"email@gmail.com\"," +
                 "\"password\": \"123456789\"," +
-                "\"name\": \"Alexander\"" +
+                "\"name\": \"Alexander\"," +
+                "\"nationality\": \"nationality\"," +
+                "\"passportNumber\": \"ffergfrgre444\"," +
+                "\"age\": \"18\"" +
                 "}";
     }
 
@@ -59,13 +62,19 @@ public class UserControllerTest {
         updatedUser1Json = "{" +
                 "\"email\": \"email@gmail.com\"," +
                 "\"password\": \"987654321\"," +
-                "\"name\": \"Mark\"" +
+                "\"name\": \"Mark\"," +
+                "\"nationality\": \"nationality2\"," +
+                "\"passportNumber\": \"fgfgr5t5t5\"," +
+                "\"age\": \"22\"" +
                 "}";
 
         updatedUser2Json = "{" +
                 "\"email\": \"email@gmail.com\"," +
                 "\"password\": \"fkm4454\"," +
-                "\"name\": \"Mark\"" +
+                "\"name\": \"Mark\"," +
+                "\"nationality\": \"nationality3\"," +
+                "\"passportNumber\": \"fl3kmewjwei88\"," +
+                "\"age\": \"40\"" +
                 "}";
     }
 
