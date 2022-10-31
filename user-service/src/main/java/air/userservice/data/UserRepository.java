@@ -1,9 +1,9 @@
-package solera.userservice.data;
+package air.userservice.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import solera.userservice.service.User;
+import air.userservice.service.User;
 
 /**
  * A UserRepository abstracts a collection of User objects.

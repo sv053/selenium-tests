@@ -1,4 +1,4 @@
-package solera.userservice.service.exception;
+package air.userservice.service.exception;
 
 /**
  * Thrown to indicate that there was some kind of problem accessing the remote resource.

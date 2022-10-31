@@ -1,7 +1,7 @@
-package solera.userservice.service;
+package air.userservice.service;
 
-import solera.userservice.service.exception.IllegalModificationException;
-import solera.userservice.service.exception.RemoteResourceException;
+import air.userservice.service.exception.IllegalModificationException;
+import air.userservice.service.exception.RemoteResourceException;
 
 import java.util.Optional;
 

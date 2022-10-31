@@ -1,4 +1,4 @@
-package solera.userservice.config;
+package air.userservice.config;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package solera.userservice.service;
+package air.userservice.service;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 
@@ -27,8 +27,8 @@ import org.mockito.Mockito;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import solera.userservice.data.UserRepository;
-import solera.userservice.service.exception.IllegalModificationException;
+import air.userservice.data.UserRepository;
+import air.userservice.service.exception.IllegalModificationException;
 
 import javax.validation.Validator;
 

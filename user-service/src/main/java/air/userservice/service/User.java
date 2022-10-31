@@ -1,4 +1,4 @@
-package solera.userservice.service;
+package air.userservice.service;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

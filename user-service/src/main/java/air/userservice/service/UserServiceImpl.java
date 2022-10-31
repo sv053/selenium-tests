@@ -1,5 +1,7 @@
-package solera.userservice.service;
+package air.userservice.service;
 
+import air.userservice.service.exception.IllegalModificationException;
+import air.userservice.service.exception.RemoteResourceException;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 
 import org.apache.logging.log4j.LogManager;
@@ -11,15 +13,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import solera.userservice.data.UserRepository;
-import solera.userservice.service.exception.IllegalModificationException;
-import solera.userservice.service.exception.RemoteResourceException;
+import air.userservice.data.UserRepository;
 
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;

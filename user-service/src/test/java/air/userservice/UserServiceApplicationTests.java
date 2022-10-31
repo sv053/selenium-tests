@@ -1,4 +1,4 @@
-package solera.userservice;
+package air.userservice;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
