@@ -1,4 +1,4 @@
-package air.airlineservice.service;
+package air.airlineservice.service.airline;
 
 import air.airlineservice.data.AirlineRepository;
 
