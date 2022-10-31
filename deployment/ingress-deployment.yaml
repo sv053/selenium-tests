@@ -40,5 +40,12 @@ spec:
               service:
                 name: airline-service
                 port:
-                  number: 5050                
+                  number: 5050     
+          - pathType: Prefix
+            path: "/tickets"
+            backend:
+              service:
+                name: airline-service
+                port:
+                  number: 5050                         
                   
