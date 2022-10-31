@@ -48,6 +48,34 @@ Now you can access each microservice individually:
 * Auth service - http://localhost:49937/
 * Airline service - http://localhost:5973/
 
+## Public API
+All the endpoints follow the REST API Resource naming conventions.
+
+### Users:
+
+* HTTP GET http://localhost/users?email=... - get the user registered with the specified email (autentication required)
+* HTTP POST http://localhost/users - register a new user
+* HTTP PATCH http://localhost/users?email=... - edit the user registered with the specified email (autentication required)
+* HTTP DELETE http://localhost/users?email=... - delete the user registered with the specified email (autentication required)
+
+### Autentication:
+
+* HTTP POST http://localhost/oauth/token - obtain an OAuth2 token
+
+### Airlines:
+
+* HTTP GET http://localhost/airlines - get all airlines
+* HTTP GET http://localhost/airlines/{id} - get the airline with the specified ID
+* HTTP POST http://localhost/airlines - create a new airline (autentication required)
+* HTTP PATCH http://localhost/airlines/{id} - edit the airline with the specified ID (autentication required)
+
+### Flights:
+
+* HTTP GET http://localhost/flights - get all flights
+* HTTP GET http://localhost/flights/{id} - get the flight with the specified ID
+* HTTP POST http://localhost/flights - create a new flight (autentication required)
+* HTTP PATCH http://localhost/flights/{id} - edit the flight with the specified ID (autentication required)
+
 ## Screenshots
 #### Jenkins build:
 
