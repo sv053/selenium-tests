@@ -1,7 +1,7 @@
 package air.airlineservice.web;
 
-import air.airlineservice.service.Airline;
-import air.airlineservice.service.AirlineService;
+import air.airlineservice.service.airline.Airline;
+import air.airlineservice.service.airline.AirlineService;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;

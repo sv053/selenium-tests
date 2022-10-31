@@ -1,4 +1,4 @@
-package air.airlineservice.service;
+package air.airlineservice.service.airline;
 
 import air.airlineservice.service.exception.IllegalModificationException;
 import air.airlineservice.service.exception.RemoteResourceException;

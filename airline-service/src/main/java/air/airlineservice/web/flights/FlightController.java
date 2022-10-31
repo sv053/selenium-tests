@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package air.airlineservice.web;
+package air.airlineservice.web.flights;
 
-import air.airlineservice.service.Airline;
-import air.airlineservice.service.AirlineService;
+import air.airlineservice.service.flight.Flight;
+import air.airlineservice.service.flight.FlightService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,39 +38,39 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping(path = "/airlines", produces = "application/json")
+@RequestMapping(path = "/flights", produces = "application/json")
 @CrossOrigin(origins = "*")
-public class AirlineController {
-    private final AirlineService airlineService;
+public class FlightController {
+    private final FlightService flightService;
 
     @Autowired
-    public AirlineController(AirlineService airlineService) {
-        this.airlineService = airlineService;
+    public FlightController(FlightService flightService) {
+        this.flightService = flightService;
     }
 
     @GetMapping
-    public List<Airline> getAll() {
-        return airlineService.findAll();
+    public List<Flight> getAll() {
+        return flightService.findAll();
     }
 
     @GetMapping(value = "/{id}")
-    public Airline getById(@PathVariable Long id) {
-        return airlineService.findById(id)
-                .orElseThrow(() -> new  NoSuchElementException("No airline with ID " + id));
+    public Flight getById(@PathVariable Long id) {
+        return flightService.findById(id)
+                .orElseThrow(() -> new  NoSuchElementException("No flight with ID " + id));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('USER') and #airline.owner == authentication.name or hasAuthority('ADMIN')")
-    public Airline post(@RequestBody @Valid Airline airline) {
-        return airlineService.save(airline);
+    @PreAuthorize("@flightAccessHandler.canPost(#flight.airline.id)")
+    public Flight post(@RequestBody @Valid Flight flight) {
+        return flightService.save(flight);
     }
 
     @PatchMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('USER') and #airline.owner == authentication.name or hasAuthority('ADMIN')")
-    public Airline patchById(@PathVariable Long id,
-                             @RequestBody Airline airline) {
-        airline.setId(id);
-        return airlineService.update(airline);
+    @PreAuthorize("@flightAccessHandler.canPatch(#flight.airline.id)")
+    public Flight patchById(@PathVariable Long id,
+                             @RequestBody Flight flight) {
+        flight.setId(id);
+        return flightService.update(flight);
     }
 }
