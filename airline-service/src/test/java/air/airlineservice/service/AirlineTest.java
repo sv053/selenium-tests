@@ -24,6 +24,7 @@ public class AirlineTest {
         Airline airline = Airline.builder()
                 .withName("name")
                 .withDescription("description")
+                .withOwner("owner")
                 .withImage(new Image("foejfifw"))
                 .build();
 
@@ -36,6 +37,6 @@ public class AirlineTest {
         Airline airline = new Airline();
 
         int errors = validator.validate(airline).size();
-        assertThat(errors, is(3));
+        assertThat(errors, is(4));
     }
 }
