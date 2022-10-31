@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package air.airlineservice.web;
+package air.airlineservice.web.airline;
 
 import air.airlineservice.service.airline.Airline;
 import air.airlineservice.service.airline.AirlineService;

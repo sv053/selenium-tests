@@ -1,4 +1,4 @@
-package air.airlineservice.web.flights;
+package air.airlineservice.web;
 
 import air.airlineservice.service.flight.Flight;
 import air.airlineservice.service.flight.FlightService;
