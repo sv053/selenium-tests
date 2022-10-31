@@ -20,3 +20,11 @@ spec:
                 name: user-service
                 port:
                   number: 4040
+
+          - pathType: Prefix
+            path: "/oauth"
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 7070
