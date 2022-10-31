@@ -2,6 +2,9 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
+**Backend stack:** Java SE, Spring Core, Spring Boot, Spring MVC, Spring Data, Spring Security,
+Spring Cloud, Apache Tomcat, Jackson, Maven, JUnit, Mockito, MySQL, H2, Hibernate, Docker, Kubernetes.
+
 ## Build
 
 ### Build the backend
@@ -39,5 +42,7 @@ Now you can access the application on http://localhost/
 mvn spring-boot:start -Dspring-boot.run.profiles=dev
 ```
 Now you can access each microservice individually:
+
 * User service - http://localhost:4545/
 * Auth service - http://localhost:49937/
+* Airline service - http://localhost:5973/
