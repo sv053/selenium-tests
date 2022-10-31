@@ -1,4 +1,4 @@
-# cmarket
+# air-tickets
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
@@ -11,7 +11,6 @@ and push it to the remote Docker repository.
 ```
 mvn clean deploy
 ```
-> Note: If the deployment fails, run `mvn clean install` and manually push all built images.
 
 ## Run locally
 
