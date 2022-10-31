@@ -20,7 +20,6 @@ spec:
                 name: user-service
                 port:
                   number: 4040
-
           - pathType: Prefix
             path: "/oauth"
             backend:
@@ -28,3 +27,11 @@ spec:
                 name: auth-service
                 port:
                   number: 7070
+          - pathType: Prefix
+            path: "/airlines"
+            backend:
+              service:
+                name: airline-service
+                port:
+                  number: 5050        
+                  

@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airline-service
+  labels:
+    app: airline-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airline-service
+      tier: microservice
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: airline-service
+        tier: microservice
+    spec:
+      containers:
+      - name: airline-service
+        image: air/airline-service:1.0
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /actuator/health/liveness
+          initialDelaySeconds: 100
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            port: 8080
+            path: /actuator/health/readiness
+          initialDelaySeconds: 15
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod
+        - name: SERVER_PORT
+          value: "8080"
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            secretKeyRef:
+              name: airline-service-secret
+              key: db-url
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: airline-service-secret
+              key: db-username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: airline-service-secret
+              key: db-password
+        - name: SPRING_SECURITY_OAUTH2_JWT-KEY
+          valueFrom:
+            secretKeyRef:
+              name: airline-service-secret
+              key: jwt-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: airline-service
+  labels:
+    app: airline-service
+    tier: microservice
+spec:
+  type: NodePort
+  ports:
+    - protocol: "TCP"
+      port: 5050
+      targetPort: 8080
+  selector:
+    app: airline-service
+    tier: microservice

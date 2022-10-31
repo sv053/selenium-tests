@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import java.util.Objects;
 
@@ -30,6 +31,18 @@ public class User {
     @Column(nullable = false)
     @NotBlank(message = "Name is mandatory")
     private String name;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Nationality is mandatory")
+    private String nationality;
+
+    @Column(name = "passport_number", nullable = false)
+    @NotBlank(message = "Passport number is mandatory")
+    private String passportNumber;
+
+    @Column(nullable = false)
+    @NotNull(message = "Age is mandatory")
+    private Integer age;
 
     /**
      * @return user builder
@@ -64,6 +77,9 @@ public class User {
         email = other.email;
         password = other.password;
         name = other.name;
+        nationality = other.nationality;
+        passportNumber = other.passportNumber;
+        age = other.age;
     }
 
     public String getEmail() {
@@ -90,6 +106,30 @@ public class User {
         this.name = name;
     }
 
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public String getPassportNumber() {
+        return passportNumber;
+    }
+
+    public void setPassportNumber(String passportNumber) {
+        this.passportNumber = passportNumber;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) {
@@ -103,12 +143,16 @@ public class User {
         User user = (User) other;
         return Objects.equals(email, user.email)
                 && Objects.equals(password, user.password)
-                && Objects.equals(name, user.name);
+                && Objects.equals(name, user.name)
+                && Objects.equals(nationality, user.nationality)
+                && Objects.equals(passportNumber, user.passportNumber)
+                && Objects.equals(age, user.age);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, password, name);
+        return Objects.hash(email, password, name,
+                nationality, passportNumber, age);
     }
 
     @Override
@@ -117,6 +161,9 @@ public class User {
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
+                ", nationality='" + nationality + '\'' +
+                ", passportNumber='" + passportNumber + '\'' +
+                ", age=" + age +
                 '}';
     }
 
@@ -147,6 +194,21 @@ public class User {
             return this;
         }
 
+        public Builder withNationality(String nationality) {
+            User.this.nationality = nationality;
+            return this;
+        }
+
+        public Builder withPassportNumber(String passportNumber) {
+            User.this.passportNumber = passportNumber;
+            return this;
+        }
+
+        public Builder withAge(Integer age) {
+            User.this.age = age;
+            return this;
+        }
+
         /**
          * Copies not null fields from the specified user.
          *
@@ -163,6 +225,15 @@ public class User {
             }
             if (other.name != null) {
                 User.this.name = other.name;
+            }
+            if (other.nationality != null) {
+                User.this.nationality = other.nationality;
+            }
+            if (other.passportNumber != null) {
+                User.this.passportNumber = other.passportNumber;
+            }
+            if (other.age != null) {
+                User.this.age = other.age;
             }
 
             return this;

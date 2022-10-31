@@ -1,4 +1,4 @@
-package air.userservice.service;
+package air.airlineservice.service;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
@@ -11,7 +11,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @Tag("category.UnitTest")
-public class UserTest {
+public class AirlineTest {
     private static Validator validator;
 
     @BeforeAll
@@ -21,24 +21,22 @@ public class UserTest {
 
     @Test
     public void shouldPassValidationWhenHasValidData() {
-        User user = User.builder()
-                .withEmail("email@gmail.com")
-                .withPassword("password")
+        Airline airline = Airline.builder()
                 .withName("name")
-                .withNationality("nationality")
-                .withPassportNumber("efkojewpofilekj")
-                .withAge(18)
+                .withDescription("description")
+                .withOwner("owner")
+                .withImage(new Image("foejfifw"))
                 .build();
 
-        int errors = validator.validate(user).size();
+        int errors = validator.validate(airline).size();
         assertThat(errors, is(0));
     }
 
     @Test
     public void shouldNotPassValidationWhenHasInvalidData() {
-        User user = new User();
+        Airline airline = new Airline();
 
-        int errors = validator.validate(user).size();
-        assertThat(errors, is(6));
+        int errors = validator.validate(airline).size();
+        assertThat(errors, is(4));
     }
 }
