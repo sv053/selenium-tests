@@ -16,8 +16,8 @@
 
 package air.airlineservice.web;
 
-import air.airlineservice.service.Airline;
-import air.airlineservice.service.AirlineService;
+import air.airlineservice.service.airline.Airline;
+import air.airlineservice.service.airline.AirlineService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
