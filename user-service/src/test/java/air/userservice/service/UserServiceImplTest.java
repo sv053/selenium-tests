@@ -84,6 +84,9 @@ public class UserServiceImplTest {
                 .withEmail("email@gmail.com")
                 .withPassword("password")
                 .withName("name")
+                .withNationality("nationality")
+                .withPassportNumber("efkojewpofilekj")
+                .withAge(18)
                 .build();
     }
 
@@ -92,7 +95,10 @@ public class UserServiceImplTest {
         updatedUser = User.builder()
                 .withEmail("email@gmail.com")
                 .withPassword("password2")
-                .withName("name")
+                .withName("name2")
+                .withNationality("nationality2")
+                .withPassportNumber("dfgret43t434rg")
+                .withAge(18)
                 .build();
     }
 

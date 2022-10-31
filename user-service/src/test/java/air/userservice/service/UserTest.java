@@ -25,6 +25,9 @@ public class UserTest {
                 .withEmail("email@gmail.com")
                 .withPassword("password")
                 .withName("name")
+                .withNationality("nationality")
+                .withPassportNumber("efkojewpofilekj")
+                .withAge(18)
                 .build();
 
         int errors = validator.validate(user).size();
@@ -36,6 +39,6 @@ public class UserTest {
         User user = new User();
 
         int errors = validator.validate(user).size();
-        assertThat(errors, is(3));
+        assertThat(errors, is(6));
     }
 }
