@@ -41,8 +41,14 @@ Now you can access the application on http://localhost/
 ```
 mvn spring-boot:start -Dspring-boot.run.profiles=dev
 ```
+
 Now you can access each microservice individually:
 
 * User service - http://localhost:4545/
 * Auth service - http://localhost:49937/
 * Airline service - http://localhost:5973/
+
+## Screenshots
+#### Jenkins build:
+
+![jenkins](screenshots/jenkins.png)
