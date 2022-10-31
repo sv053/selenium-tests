@@ -10,3 +10,6 @@ VALUES (1, 'country', 'airport', '1', 'country', 'airport', '1', '2022-10-31T21:
        (2, 'country', 'airport', '1', 'country', 'airport', '1', '2022-10-31T21:51:36.867100600'),
        (3, 'country', 'airport', '1', 'country', 'airport', '1', '2022-10-31T21:51:36.867100600'),
        (4, 'country', 'airport', '1', 'country', 'airport', '1', '2022-10-31T21:51:36.867100600');
+
+INSERT INTO tickets(flight_id, price)
+VALUES (1, 100), (2, 200), (3, 300);
