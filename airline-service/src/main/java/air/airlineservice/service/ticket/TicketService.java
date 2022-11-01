@@ -21,6 +21,41 @@ public interface TicketService {
     List<Ticket> findAll();
 
     /**
+     * Looks for all tickets with the specified flight ID in the remote ticket repository.
+     *
+     * @return all the tickets with the specified flight ID from the remote ticket repository
+     *
+     * @throws RemoteResourceException if there is any problem with the remote ticket repository
+     */
+    List<Ticket> findByFlightId(long flightId);
+
+    /**
+     * Looks for all tickets with the specified flight ID in the remote ticket repository
+     * which price is lower that or equal to the specified price.
+     *
+     * @param price price to match
+     *
+     * @return all tickets with the specified flight ID in the remote ticket repository
+     * which price is lower that or equal to the specified price.
+     *
+     * @throws RemoteResourceException if there is any problem with the remote ticket repository
+     */
+    List<Ticket> findByFlightIdAndPrice(long flightId, long price);
+
+    /**
+     * Looks for all tickets with the specified flight ID in the remote ticket repository
+     * which allow luggage.
+     *
+     * @param isAllowed is luggage allowed
+     *
+     * @return all tickets with the specified flight ID in the remote ticket repository
+     * which allow luggage.
+     *
+     * @throws RemoteResourceException if there is any problem with the remote ticket repository
+     */
+    List<Ticket> findByFlightIdWithLuggage(long flightId, boolean isAllowed);
+
+    /**
      * Looks for a ticket with the specified ID in the remote ticket repository.
      *
      * @param id ID of the ticket to get
@@ -41,7 +76,7 @@ public interface TicketService {
      *
      * @return the saved ticket
      *
-     * @throws IllegalModificationException either if a ticket has invalid data or already exists
+     * @throws IllegalModificationException if a ticket has invalid data
      * @throws RemoteResourceException if there is any problem with the remote ticket repository
      */
     Ticket save(Ticket ticket);

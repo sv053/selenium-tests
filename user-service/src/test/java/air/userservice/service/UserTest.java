@@ -36,7 +36,11 @@ public class UserTest {
 
     @Test
     public void shouldNotPassValidationWhenHasInvalidData() {
-        User user = new User();
+        User user = User.builder()
+                .withEmail("not an email")
+                .withAge(0)
+                .withPassportNumber("1")
+                .build();
 
         int errors = validator.validate(user).size();
         assertThat(errors, is(6));

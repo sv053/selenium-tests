@@ -23,6 +23,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -53,6 +54,42 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public List<Ticket> findByFlightId(long flightId) {
+        try {
+            Supplier<List<Ticket>> findAll = () -> repository.findAllByFlight(flightId);
+            return circuitBreaker.decorateSupplier(findAll).get();
+        } catch (Exception e) {
+            throw new RemoteResourceException("Ticket database unavailable", e);
+        }
+    }
+
+    @Override
+    public List<Ticket> findByFlightIdAndPrice(long flightId, long price) {
+        try {
+            Supplier<List<Ticket>> findAll = () -> repository.findAllByFlight(flightId);
+            List<Ticket> tickets = circuitBreaker.decorateSupplier(findAll).get();
+            return tickets.stream()
+                    .filter(ticket -> ticket.getPrice() <= price)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RemoteResourceException("Ticket database unavailable", e);
+        }
+    }
+
+    @Override
+    public List<Ticket> findByFlightIdWithLuggage(long flightId, boolean isAllowed) {
+        try {
+            Supplier<List<Ticket>> findAll = () -> repository.findAllByFlight(flightId);
+            List<Ticket> tickets = circuitBreaker.decorateSupplier(findAll).get();
+            return tickets.stream()
+                    .filter(ticket -> ticket.getLuggageAllowed() == isAllowed)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RemoteResourceException("Ticket database unavailable", e);
+        }
+    }
+
+    @Override
     public Optional<Ticket> findById(Long id) {
         try {
             Supplier<Optional<Ticket>> findById = () -> repository.findById(id);
@@ -72,9 +109,6 @@ public class TicketServiceImpl implements TicketService {
             return saved;
         } catch (IllegalModificationException | RemoteResourceException e) {
             throw e;
-        } catch (DataIntegrityViolationException e) {
-            String msg = "Such a ticket already exists: " + ticket.getId();
-            throw new IllegalModificationException(msg, e);
         } catch (Exception e) {
             throw new RemoteResourceException("Ticket database unavailable", e);
         }

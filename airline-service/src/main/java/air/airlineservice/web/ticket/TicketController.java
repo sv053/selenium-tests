@@ -23,11 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,6 +54,23 @@ public class TicketController {
         return ticketService.findAll();
     }
 
+    @GetMapping(params = "flight")
+    public List<Ticket> getAllByFlight(@RequestParam Long flight) {
+        return ticketService.findByFlightId(flight);
+    }
+
+    @GetMapping(params = {"flight", "price"})
+    public List<Ticket> getAllByFlightAndPrice(@RequestParam Long flight,
+                                               @RequestParam Long price) {
+        return ticketService.findByFlightIdAndPrice(flight, price);
+    }
+
+    @GetMapping(params = {"flight", "luggageAllowed"})
+    public List<Ticket> getAllByFlightWithLuggage(@RequestParam Long flight,
+                                                  @RequestParam Boolean luggageAllowed) {
+        return ticketService.findByFlightIdWithLuggage(flight, luggageAllowed);
+    }
+
     @GetMapping(value = "/{id}")
     public Ticket getById(@PathVariable Long id) {
         return ticketService.findById(id)
@@ -63,5 +82,12 @@ public class TicketController {
     @PreAuthorize("@ticketAccessHandler.canPost(#ticket)")
     public Ticket post(@RequestBody @Valid Ticket ticket) {
         return ticketService.save(ticket);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("@ticketAccessHandler.canDelete(#id)")
+    public void deleteById(@PathVariable Long id) {
+        ticketService.deleteById(id);
     }
 }

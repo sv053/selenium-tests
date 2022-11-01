@@ -134,6 +134,15 @@ public class FlightServiceImplTest {
     }
 
     @Test
+    public void shouldReturnListOfFlightsByAirlineId() {
+        List<Flight> flights = List.of(flight, flight, flight);
+        when(flightRepository.findAllByAirlineId(1)).thenReturn(flights);
+
+        List<Flight> saved = flightService.findByAirlineId(1);
+        assertThat(saved, is(equalTo(flights)));
+    }
+
+    @Test
     public void shouldSaveFlightWhenFlightIsValid() {
         when(flightRepository.save(any(Flight.class))).thenReturn(flight);
         when(validator.validate(any(Flight.class))).thenReturn(Collections.emptySet());

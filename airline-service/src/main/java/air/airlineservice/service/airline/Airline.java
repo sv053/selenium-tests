@@ -1,17 +1,25 @@
 package air.airlineservice.service.airline;
 
+import air.airlineservice.service.flight.Flight;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "airlines")
@@ -21,7 +29,7 @@ public class Airline {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @NotBlank(message = "Name is mandatory")
     private String name;
 
@@ -38,6 +46,10 @@ public class Airline {
     @NotNull(message = "Image is mandatory")
     @Valid
     private Image image;
+
+    @OneToMany(mappedBy = "airline", cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    private Set<Flight> flights;
 
     /**
      * @return airline builder
@@ -61,6 +73,7 @@ public class Airline {
      * Constructs a new airline.
      */
     public Airline() {
+        flights = new HashSet<>();
     }
 
     /**
@@ -74,6 +87,7 @@ public class Airline {
         description = other.description;
         owner = other.owner;
         image = (other.image == null) ? null : new Image(other.image);
+        flights = new HashSet<>(other.flights);
     }
 
     public Long getId() {
@@ -114,6 +128,14 @@ public class Airline {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public Set<Flight> getFlights() {
+        return new HashSet<>(flights);
+    }
+
+    public void setFlights(Set<Flight> flights) {
+        this.flights = new HashSet<>(flights);
     }
 
     @Override
@@ -186,6 +208,11 @@ public class Airline {
             return this;
         }
 
+        public Builder withFlights(Set<Flight> flights) {
+            Airline.this.flights = new HashSet<>(flights);
+            return this;
+        }
+
         /**
          * Copies not null fields from the specified airline.
          *
@@ -208,6 +235,9 @@ public class Airline {
             }
             if (other.image != null) {
                 Airline.this.image = new Image(other.image);
+            }
+            if (other.flights != null) {
+                Airline.this.flights = new HashSet<>(other.flights);
             }
 
             return this;

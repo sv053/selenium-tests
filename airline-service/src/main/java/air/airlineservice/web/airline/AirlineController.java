@@ -23,12 +23,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -59,6 +61,12 @@ public class AirlineController {
                 .orElseThrow(() -> new  NoSuchElementException("No airline with ID " + id));
     }
 
+    @GetMapping(params = "name")
+    public Airline getById(@RequestParam String name) {
+        return airlineService.findByName(name)
+                .orElseThrow(() -> new  NoSuchElementException("No airline with name " + name));
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('USER') and #airline.owner == authentication.name or hasAuthority('ADMIN')")
@@ -67,10 +75,17 @@ public class AirlineController {
     }
 
     @PatchMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('USER') and #airline.owner == authentication.name or hasAuthority('ADMIN')")
+    @PreAuthorize("@airlineAccessHandler.canPatch(#id)")
     public Airline patchById(@PathVariable Long id,
                              @RequestBody Airline airline) {
         airline.setId(id);
         return airlineService.update(airline);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("@airlineAccessHandler.canDelete(#id)")
+    public void deleteById(@PathVariable Long id) {
+        airlineService.deleteById(id);
     }
 }

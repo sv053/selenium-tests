@@ -16,11 +16,14 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
+import java.util.Optional;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -128,6 +131,15 @@ public class FlightControllerTest {
 
     @Test
     @WithAnonymousUser
+    public void shouldReturnFlightsOnFlightsGetByAirlineRequest() throws Exception {
+        mvc.perform(get("/flights?airline=1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithAnonymousUser
     public void shouldReturnFlightByIdOnFlightGetRequest() throws Exception {
         mvc.perform(get("/flights/1"))
                 .andDo(print())
@@ -197,5 +209,41 @@ public class FlightControllerTest {
     @WithAnonymousUser
     public void shouldDenyFlightPatchingWhenUserIsNotAuthenticated() throws Exception {
         patchByIdAndExpect(1L, updatedFlight1Json, status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void shouldDeleteFlightOnFlightDeleteRequestWhenUserIsAdmin() throws Exception {
+        deleteByIdAndExpect(6L, status().isNoContent());
+
+        Optional<Flight> deleted = flightService.findById(6L);
+        assertThat(deleted, is(Optional.empty()));
+    }
+
+    private void deleteByIdAndExpect(long id, ResultMatcher status) throws Exception {
+        mvc.perform(delete("/flights/" + id))
+                .andDo(print())
+                .andExpect(status);
+    }
+
+    @Test
+    @WithMockUser(authorities = "USER", username = "owner3")
+    public void shouldDeleteFlightOnAFlightDeleteRequestWhenUserISResourceOwner() throws Exception {
+        deleteByIdAndExpect(5L, status().isNoContent());
+
+        Optional<Flight> deleted = flightService.findById(5L);
+        assertThat(deleted, is(Optional.empty()));
+    }
+
+    @Test
+    @WithMockUser(authorities = "USER", username = "owner")
+    public void shouldDenyFlightDeletionWhenUserIsNotResourceOwner() throws Exception {
+        deleteByIdAndExpect(4L, status().isUnauthorized());
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void shouldDenyFlightDeletionWhenUserIsNotAuthenticated() throws Exception {
+        deleteByIdAndExpect(4L, status().isUnauthorized());
     }
 }

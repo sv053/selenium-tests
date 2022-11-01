@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import java.util.Objects;
 
@@ -25,12 +27,18 @@ public class Ticket {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "flight_id", nullable = false)
     @NotNull(message = "Flight is mandatory")
     private Flight flight;
 
     @Column(nullable = false)
     @NotNull(message = "Price is mandatory")
+    @Positive(message = "Price must be positive")
     private Long price;
+
+    @Column(name = "luggage_allowed", nullable = false)
+    @NotNull(message = "Luggage allowance is mandatory")
+    private Boolean luggageAllowed;
 
     /**
      * @return ticket builder
@@ -65,6 +73,7 @@ public class Ticket {
         id = other.id;
         flight = other.flight;
         price = other.price;
+        luggageAllowed = other.luggageAllowed;
     }
 
     public Long getId() {
@@ -91,6 +100,14 @@ public class Ticket {
         this.price = price;
     }
 
+    public Boolean getLuggageAllowed() {
+        return luggageAllowed;
+    }
+
+    public void setLuggageAllowed(Boolean luggageAllowed) {
+        this.luggageAllowed = luggageAllowed;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) {
@@ -103,12 +120,13 @@ public class Ticket {
 
         Ticket ticket = (Ticket) other;
         return Objects.equals(flight, ticket.flight)
-                && Objects.equals(price, ticket.price);
+                && Objects.equals(price, ticket.price)
+                && Objects.equals(luggageAllowed, ticket.luggageAllowed);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(flight, price);
+        return Objects.hash(flight, price, luggageAllowed);
     }
 
     @Override
@@ -117,6 +135,7 @@ public class Ticket {
                 "id=" + id +
                 ", flight=" + flight +
                 ", price=" + price +
+                ", luggageAllowed=" + luggageAllowed +
                 '}';
     }
 
@@ -147,6 +166,11 @@ public class Ticket {
             return this;
         }
 
+        public Builder isLuggageAllowed(Boolean isAllowed) {
+            Ticket.this.luggageAllowed = isAllowed;
+            return this;
+        }
+
         /**
          * Copies not null fields from the specified ticket.
          *
@@ -163,6 +187,9 @@ public class Ticket {
             }
             if (other.price != null) {
                 Ticket.this.price = other.price;
+            }
+            if (other.luggageAllowed != null) {
+                Ticket.this.luggageAllowed = other.luggageAllowed;
             }
 
             return this;

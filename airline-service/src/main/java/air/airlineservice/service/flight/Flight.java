@@ -1,9 +1,13 @@
 package air.airlineservice.service.flight;
 
 import air.airlineservice.service.airline.Airline;
+import air.airlineservice.service.ticket.Ticket;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -12,12 +16,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Flight domain class.
@@ -58,6 +65,10 @@ public class Flight {
     @NotNull(message = "Date and time are mandatory")
     private LocalDateTime dateTime;
 
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    private Set<Ticket> tickets;
+
     /**
      * @return flight builder
      */
@@ -80,6 +91,7 @@ public class Flight {
      * Constructs a new flight.
      */
     public Flight() {
+        tickets = new HashSet<>();
     }
 
     /**
@@ -93,6 +105,7 @@ public class Flight {
         from = (other.from == null) ? null : new Destination(other.from);
         to = (other.to == null) ? null : new Destination(other.to);
         dateTime = other.dateTime;
+        tickets = new HashSet<>(other.tickets);
     }
 
     public Long getId() {
@@ -133,6 +146,14 @@ public class Flight {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public Set<Ticket> getTickets() {
+        return new HashSet<>(tickets);
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = new HashSet<>(tickets);
     }
 
     @Override
@@ -205,6 +226,11 @@ public class Flight {
             return this;
         }
 
+        public Builder withTickets(Set<Ticket> tickets) {
+            Flight.this.tickets = new HashSet<>(tickets);
+            return this;
+        }
+
         /**
          * Copies not null fields from the specified flight.
          *
@@ -227,6 +253,9 @@ public class Flight {
             }
             if (other.dateTime != null) {
                 Flight.this.dateTime = other.dateTime;
+            }
+            if (other.tickets != null) {
+                Flight.this.tickets = new HashSet<>(other.tickets);
             }
 
             return this;

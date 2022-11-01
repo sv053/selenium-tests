@@ -21,6 +21,17 @@ public interface FlightService {
     List<Flight> findAll();
 
     /**
+     * Looks for all flights from the airline with the specified ID in the remote flight repository.
+     *
+     * @param airlineId ID pf the airline with flights to find
+     *
+     * @return all the flights from the airline with the specified ID in the remote flight repository
+     *
+     * @throws RemoteResourceException if there is any problem with the remote flight repository
+     */
+    List<Flight> findByAirlineId(long airlineId);
+
+    /**
      * Looks for a flight with the specified ID in the remote flight repository.
      *
      * @param id ID of the flight to get
@@ -41,7 +52,7 @@ public interface FlightService {
      *
      * @return the saved flight
      *
-     * @throws IllegalModificationException either if a flight has invalid data or already exists
+     * @throws IllegalModificationException if a flight has invalid data
      * @throws RemoteResourceException if there is any problem with the remote flight repository
      */
     Flight save(Flight flight);
@@ -55,7 +66,7 @@ public interface FlightService {
      *
      * @return updated flight
      *
-     * @throws IllegalModificationException either if a flight has invalid data or does not exist
+     * @throws IllegalModificationException if a flight has invalid data
      * @throws RemoteResourceException if there is any problem with the remote flight repository
      */
     Flight update(Flight flight);

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import java.util.Objects;
 
@@ -20,6 +21,7 @@ public class Destination {
 
     @Column(nullable = false)
     @NotNull(message = "Gate is mandatory")
+    @Positive(message = "Gate must be positive")
     private Long gate;
 
     /**

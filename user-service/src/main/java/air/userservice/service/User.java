@@ -6,8 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import java.util.Objects;
 
@@ -21,6 +24,7 @@ public class User {
     @Id
     @Column(nullable = false)
     @NotBlank(message = "Email is mandatory")
+    @Email(message = "Email must be valid")
     private String email;
 
     @Column(nullable = false)
@@ -38,10 +42,12 @@ public class User {
 
     @Column(name = "passport_number", nullable = false)
     @NotBlank(message = "Passport number is mandatory")
+    @Size(min = 8, message = "Passport number must be valid")
     private String passportNumber;
 
     @Column(nullable = false)
     @NotNull(message = "Age is mandatory")
+    @Positive(message = "Age must be valid")
     private Integer age;
 
     /**

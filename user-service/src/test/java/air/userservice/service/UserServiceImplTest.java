@@ -118,24 +118,24 @@ public class UserServiceImplTest {
 
     @Test
     public void shouldSaveUserWhenUserIsValid() {
-        when(userRepository.save(any(User.class))).thenReturn(user);
-        when(validator.validate(any(User.class))).thenReturn(Collections.emptySet());
+        when(userRepository.save(user)).thenReturn(user);
+        when(validator.validate(user)).thenReturn(Collections.emptySet());
 
         User saved = userService.save(user);
         assertThat(saved, equalTo(user));
     }
 
     @Test
-    public void shouldThrowExceptionWhenUserIsInvalid() {
+    public void shouldThrowExceptionWhileSavingWhenUserIsInvalid() {
         when(validator.validate(any(User.class))).thenThrow(IllegalModificationException.class);
         assertThrows(IllegalModificationException.class, () -> userService.save(new User()));
     }
 
     @Test
     public void shouldUpdateUserWhenUserIsValid() {
-        when(userRepository.findById("email@gmail.com")).thenReturn(Optional.of(user));
-        when(userRepository.save(any(User.class))).thenReturn(updatedUser);
-        when(validator.validate(any(User.class))).thenReturn(Collections.emptySet());
+        when(userRepository.findById(user.getEmail())).thenReturn(Optional.of(user));
+        when(userRepository.save(updatedUser)).thenReturn(updatedUser);
+        when(validator.validate(updatedUser)).thenReturn(Collections.emptySet());
 
         User updated = userService.update(updatedUser);
         assertThat(updated, equalTo(updatedUser));
@@ -143,13 +143,14 @@ public class UserServiceImplTest {
 
     @Test
     public void shouldNotContainUserWhenDeletesThisUser() {
-        when(userRepository.findById(any(String.class))).thenReturn(Optional.of(user));
-        doAnswer(invocation -> when(userRepository.findById("email@gmail.com")).thenReturn(Optional.empty()))
-                .when(userRepository).deleteById("email@gmail.com");
+        when(userRepository.findById(user.getEmail())).thenReturn(Optional.of(user));
+        doAnswer(invocation -> when(userRepository.findById(user.getEmail()))
+                .thenReturn(Optional.empty()))
+                .when(userRepository).deleteById(user.getEmail());
 
-        userService.deleteByLogin("email@gmail.com");
+        userService.deleteByEmail(user.getEmail());
 
-        Optional<User> deleted = userService.findByEmail("email@gmail.com");
+        Optional<User> deleted = userService.findByEmail(user.getEmail());
         assertThat(deleted, is(Optional.empty()));
     }
 }
