@@ -2,31 +2,24 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-**Backend stack:** Java SE, Spring Core, Spring Boot, Spring MVC, Spring Data, Spring Security,
-Spring Cloud, Apache Tomcat, Jackson, Maven, JUnit, Mockito, MySQL, H2, Hibernate, Docker, Kubernetes.
-
 ## Build
 
 ### Build the backend
 
-#### To run on Kubernetes
 At first, make sure that [Docker](https://www.docker.com/) daemon is running.
-Then, [Maven](https://maven.apache.org/) will build a Docker image for each microservice
+Login to the Docker Hub with the following credentials:
+```
+docker login -u airtickets -p air-tickets8080
+```
+
+Then, run [Maven](https://maven.apache.org/). It will build a Docker image for each microservice
 and push it to the remote Docker repository.
 ```
 mvn clean deploy
 ```
-
-#### To run as a jar
-
-[Maven](https://maven.apache.org/) will build a jar for each microservice.
-```
-mvn clean verify
-```
+> Note: If the deployment fails, run `mvn clean install` and manually push all built images.
 
 ## Run locally
-
-#### On Kubernetes
 
 You can spin up the Kubernetes deployment locally using [Minikube](https://minikube.sigs.k8s.io/docs/start/).
 Give the `minikube_run` shell script the right to execute and run it.
@@ -35,18 +28,6 @@ chmod +x deployment/minikube_run.sh
 ./deployment/minikube_run.sh
 ```
 Now you can access the application on http://localhost/
-
-#### As a jar
-
-```
-mvn spring-boot:start -Dspring-boot.run.profiles=dev
-```
-
-Now you can access each microservice individually:
-
-* User service - http://localhost:4545/
-* Auth service - http://localhost:49937/
-* Airline service - http://localhost:5973/
 
 ## Public API
 All the endpoints follow the REST API Resource naming conventions.
@@ -93,6 +74,9 @@ which allow luggage
 * HTTP DELETE http://localhost/tickets/{id} - delete the ticket with the specified ID (autentication required)
 
 ## Screenshots
-#### Jenkins build:
 
+#### Jenkins build:
 ![jenkins](screenshots/jenkins.png)
+
+#### Kubernetes deployment:
+![k8s](screenshots/k8s.png)
