@@ -9,7 +9,7 @@ const NavigationBar = () => {
             <Container>
                 <Link to="/" className="navbar-brand" id="main-link">AirTickets</Link>
                 <Nav className="me-auto">
-                    <Link to="/cart" className="nav-link" id="cart-link">Account</Link>
+                    <Link to="/account" className="nav-link" id="account-link">Account</Link>
                 </Nav>
             </Container>
         </Navbar>
