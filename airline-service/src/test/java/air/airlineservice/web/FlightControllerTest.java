@@ -227,7 +227,7 @@ public class FlightControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = "USER", username = "owner5")
+    @WithMockUser(authorities = "USER", username = "owner3")
     public void shouldDeleteFlightOnAFlightDeleteRequestWhenUserISResourceOwner() throws Exception {
         deleteByIdAndExpect(5L, status().isNoContent());
 
@@ -237,7 +237,7 @@ public class FlightControllerTest {
 
     @Test
     @WithMockUser(authorities = "USER", username = "owner")
-    public void shouldDenyFlightDeletionWhenUserIsNotResourceOwnerAdmin() throws Exception {
+    public void shouldDenyFlightDeletionWhenUserIsNotResourceOwner() throws Exception {
         deleteByIdAndExpect(4L, status().isUnauthorized());
     }
 
