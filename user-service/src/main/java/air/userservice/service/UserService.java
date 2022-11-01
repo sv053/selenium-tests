@@ -37,7 +37,7 @@ public interface UserService {
     User save(User user);
 
     /**
-     * Updates the user with the specified login in the remote user repository.
+     * Updates the user with the specified email in the remote user repository.
      * Use the returned user for further operations as the update operation
      * might have changed the user instance completely.
      *
@@ -51,12 +51,12 @@ public interface UserService {
     User update(User user);
 
     /**
-     * Deletes the user with the specified login in the remote user repository.
+     * Deletes the user with the specified email in the remote user repository.
      *
-     * @param login the login of the user to be deleted
+     * @param email the email of the user to be deleted
      *
      * @throws IllegalModificationException if such a user does not exist
      * @throws RemoteResourceException if there is any problem with the remote user repository
      */
-    void deleteByLogin(String login);
+    void deleteByEmail(String email);
 }

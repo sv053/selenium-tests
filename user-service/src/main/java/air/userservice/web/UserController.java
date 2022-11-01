@@ -73,6 +73,6 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('USER') and #email == authentication.name or hasAuthority('ADMIN')")
     public void deleteByEmail(@RequestParam String email) {
-        userService.deleteByLogin(email);
+        userService.deleteByEmail(email);
     }
 }
