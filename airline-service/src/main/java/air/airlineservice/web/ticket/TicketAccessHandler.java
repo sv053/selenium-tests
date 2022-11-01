@@ -45,8 +45,7 @@ public class TicketAccessHandler {
             if (flight.isEmpty()) {
                 return false;
             } else {
-                long airlineId = flight.get().getAirline().getId();
-                return accessHandler.canPost(airlineId);
+                return accessHandler.canPost(flight.get());
             }
         } catch (Exception e) {
             logger.error(e);

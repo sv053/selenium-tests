@@ -68,13 +68,13 @@ public class FlightController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@flightAccessHandler.canPost(#flight.airline.id)")
+    @PreAuthorize("@flightAccessHandler.canPost(#flight)")
     public Flight post(@RequestBody @Valid Flight flight) {
         return flightService.save(flight);
     }
 
     @PatchMapping(value = "/{id}")
-    @PreAuthorize("@flightAccessHandler.canPatch(#flight.airline.id)")
+    @PreAuthorize("@flightAccessHandler.canPatch(#flight)")
     public Flight patchById(@PathVariable Long id,
                              @RequestBody Flight flight) {
         flight.setId(id);
