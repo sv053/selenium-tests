@@ -51,6 +51,16 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public List<Flight> findByAirlineId(long airlineId) {
+        try {
+            Supplier<List<Flight>> findAll = () -> repository.findAllByAirlineId(airlineId);
+            return circuitBreaker.decorateSupplier(findAll).get();
+        } catch (Exception e) {
+            throw new RemoteResourceException("Flight database unavailable", e);
+        }
+    }
+
+    @Override
     public Optional<Flight> findById(Long id) {
         try {
             Supplier<Optional<Flight>> findById = () -> repository.findById(id);
