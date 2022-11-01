@@ -128,6 +128,15 @@ public class FlightControllerTest {
 
     @Test
     @WithAnonymousUser
+    public void shouldReturnFlightsOnFlightsGetByAirlineRequest() throws Exception {
+        mvc.perform(get("/flights?airline=1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithAnonymousUser
     public void shouldReturnFlightByIdOnFlightGetRequest() throws Exception {
         mvc.perform(get("/flights/1"))
                 .andDo(print())
