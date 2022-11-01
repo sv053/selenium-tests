@@ -3,6 +3,7 @@ package air.airlineservice.web.ticket;
 import air.airlineservice.service.flight.Flight;
 import air.airlineservice.service.flight.FlightService;
 import air.airlineservice.service.ticket.Ticket;
+import air.airlineservice.service.ticket.TicketService;
 import air.airlineservice.web.flights.FlightAccessHandler;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,12 +18,15 @@ import java.util.Optional;
 public class TicketAccessHandler {
     private static final Logger logger = LogManager.getLogger(TicketAccessHandler.class);
 
+    private final TicketService ticketService;
     private final FlightService flightService;
     private final FlightAccessHandler accessHandler;
 
     @Autowired
-    public TicketAccessHandler(FlightService flightService,
+    public TicketAccessHandler(TicketService ticketService,
+                               FlightService flightService,
                                FlightAccessHandler accessHandler) {
+        this.ticketService = ticketService;
         this.flightService = flightService;
         this.accessHandler = accessHandler;
     }
@@ -42,6 +46,22 @@ public class TicketAccessHandler {
         } else {
             long airlineId = flight.get().getAirline().getId();
             return accessHandler.canPost(airlineId);
+        }
+    }
+
+    /**
+     * Decides whether the current user can delete a ticket with the specified ID.
+     *
+     * @param id ID of the ticket to delete
+     *
+     * @return true if access is available, false otherwise
+     */
+    public boolean canDelete(long id) {
+        Optional<Ticket> ticket = ticketService.findById(id);
+        if (ticket.isEmpty()) {
+            return false;
+        } else {
+            return canPost(ticket.get());
         }
     }
 }

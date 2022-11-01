@@ -16,4 +16,4 @@ VALUES (1, 'country', 'airport', '1', 'country', 'airport', '1', '2022-10-31T21:
        (6, 'country', 'airport', '1', 'country', 'airport', '1', '2022-10-31T21:51:36.867100600');
 
 INSERT INTO tickets(flight_id, price, luggage_allowed)
-VALUES (1, 100, true), (2, 200, false), (3, 300, true);
+VALUES (1, 100, true), (2, 200, false), (3, 300, true),  (4, 400, true);
