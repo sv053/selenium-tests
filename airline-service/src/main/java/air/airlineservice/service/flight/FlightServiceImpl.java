@@ -80,9 +80,6 @@ public class FlightServiceImpl implements FlightService {
             return saved;
         } catch (IllegalModificationException | RemoteResourceException e) {
             throw e;
-        } catch (DataIntegrityViolationException e) {
-            String msg = "Such a flight already exists: " + flight.getId();
-            throw new IllegalModificationException(msg, e);
         } catch (Exception e) {
             throw new RemoteResourceException("Flight database unavailable", e);
         }
@@ -133,9 +130,6 @@ public class FlightServiceImpl implements FlightService {
             return updated;
         } catch (IllegalModificationException | RemoteResourceException e) {
             throw e;
-        } catch (DataIntegrityViolationException e) {
-            String msg = "Such a flight already exists: " + flight.getId();
-            throw new IllegalModificationException(msg, e);
         } catch (Exception e) {
             throw new RemoteResourceException("Flight database unavailable", e);
         }
