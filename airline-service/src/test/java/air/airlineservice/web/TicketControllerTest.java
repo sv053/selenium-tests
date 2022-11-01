@@ -37,13 +37,19 @@ public class TicketControllerTest {
     @BeforeAll
     public static void createNewFlightJson() {
         newTicket1Json = "{" +
-                "\"flightId\": \"1\"," +
-                "\"price\": \"100\"" +
+                "\"flight\":{ " +
+                    "\"id\": \"1\"" +
+                "}," +
+                "\"price\": \"100\"," +
+                "\"luggageAllowed\": \"true\"" +
                 "}";
 
         newTicket2Json = "{" +
-                "\"flightId\": \"2\"," +
-                "\"price\": \"200\"" +
+                "\"flight\":{ " +
+                    "\"id\": \"2\"" +
+                "}," +
+                "\"price\": \"200\"," +
+                "\"luggageAllowed\": \"true\"" +
                 "}";
     }
 
@@ -51,6 +57,33 @@ public class TicketControllerTest {
     @WithAnonymousUser
     public void shouldReturnTicketsOnTicketsGetRequest() throws Exception {
         mvc.perform(get("/tickets"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void shouldReturnTicketsOnTicketsGetByFlightRequest() throws Exception {
+        mvc.perform(get("/tickets?flight=1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void shouldReturnTicketsOnTicketsGetByFlightAndPriceRequest() throws Exception {
+        mvc.perform(get("/tickets?flight=1&price=100"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void shouldReturnTicketsOnTicketsGetByFlightWithLuggageRequest() throws Exception {
+        mvc.perform(get("/tickets?flight=1&luggageAllowed=true"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));

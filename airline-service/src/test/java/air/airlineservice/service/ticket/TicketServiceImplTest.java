@@ -53,6 +53,7 @@ public class TicketServiceImplTest {
         ticket = Ticket.builder()
                 .withFlight(new Flight())
                 .withPrice(100L)
+                .isLuggageAllowed(true)
                 .build();
 
     }
