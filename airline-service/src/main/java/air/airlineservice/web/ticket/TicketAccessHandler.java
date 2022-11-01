@@ -39,13 +39,18 @@ public class TicketAccessHandler {
      * @return true if access is available, false otherwise
      */
     public boolean canPost(Ticket ticket) {
-        long flightId = ticket.getFlight().getId();
-        Optional<Flight> flight = flightService.findById(flightId);
-        if (flight.isEmpty()) {
+        try {
+            long flightId = ticket.getFlight().getId();
+            Optional<Flight> flight = flightService.findById(flightId);
+            if (flight.isEmpty()) {
+                return false;
+            } else {
+                long airlineId = flight.get().getAirline().getId();
+                return accessHandler.canPost(airlineId);
+            }
+        } catch (Exception e) {
+            logger.error(e);
             return false;
-        } else {
-            long airlineId = flight.get().getAirline().getId();
-            return accessHandler.canPost(airlineId);
         }
     }
 
@@ -57,11 +62,16 @@ public class TicketAccessHandler {
      * @return true if access is available, false otherwise
      */
     public boolean canDelete(long id) {
-        Optional<Ticket> ticket = ticketService.findById(id);
-        if (ticket.isEmpty()) {
+        try {
+            Optional<Ticket> ticket = ticketService.findById(id);
+            if (ticket.isEmpty()) {
+                return false;
+            } else {
+                return canPost(ticket.get());
+            }
+        } catch (Exception e) {
+            logger.error(e);
             return false;
-        } else {
-            return canPost(ticket.get());
         }
     }
 }
