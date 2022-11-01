@@ -4,6 +4,15 @@
 
 ## Build
 
+### Build the frontend
+
+Build the React frontend application using [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+```
+cd frontend
+npm install
+npm run build
+cd ..
+```
 ### Build the backend
 
 At first, make sure that [Docker](https://www.docker.com/) daemon is running.
@@ -80,3 +89,9 @@ which allow luggage
 
 #### Kubernetes deployment:
 ![k8s](screenshots/k8s.png)
+
+#### Account sign in:
+![k8s](screenshots/signin.png)
+
+#### Account sign up:
+![k8s](screenshots/signup.png)

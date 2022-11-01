@@ -28,7 +28,10 @@ kubectl create -f auth-service/auth-service-deployment.yaml
 
 # Airline service
 kubectl create -f airline-service/airline-service-secret.yaml
-kubectl create -f airline-service/airline-service-deployment.yaml 
+kubectl create -f airline-service/airline-service-deployment.yaml
+
+# Frontend
+kubectl create -f frontend-deployment.yaml
 
 echo "Running tunnel. You can access the application on http://localhost/"
 minikube tunnel
