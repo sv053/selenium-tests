@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import {HashRouter, Route, Routes, Navigate} from "react-router-dom"
+import NotificationContainer from "react-notifications/lib/NotificationContainer"
+import NavigationBar from "./components/NavigationBar"
+
+import './App.css'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <HashRouter>
+          <NotificationContainer/>
+          <div className="layout">
+            <NavigationBar/>
+            <Routes>
+              <Route exact path="/" element={<Navigate to="/flights"/>}/>
+              <Route exact path="/flights" element={}/>
+              <Route exact path="/account" element={}/>
+              <Route exact path="/account/sign-in" element={}/>
+              <Route exact path="/account/sign-up" element={}/>
+              <Route exact path="/error" element={}/>
+              <Route exact path="*" element={}/>
+            </Routes>
+          </div>
+        </HashRouter>
+    );
 }
 
 export default App;
