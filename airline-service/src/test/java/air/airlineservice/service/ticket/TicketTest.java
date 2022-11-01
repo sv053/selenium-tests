@@ -26,6 +26,7 @@ public class TicketTest {
         Ticket ticket = Ticket.builder()
                 .withFlight(new Flight())
                 .withPrice(100L)
+                .isLuggageAllowed(true)
                 .build();
 
         int errors = validator.validate(ticket).size();
@@ -37,6 +38,6 @@ public class TicketTest {
         Ticket ticket = new Ticket();
 
         int errors = validator.validate(ticket).size();
-        assertThat(errors, is(2));
+        assertThat(errors, is(3));
     }
 }

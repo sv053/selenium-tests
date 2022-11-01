@@ -38,12 +38,14 @@ public class TicketControllerTest {
     public static void createNewFlightJson() {
         newTicket1Json = "{" +
                 "\"flightId\": \"1\"," +
-                "\"price\": \"100\"" +
+                "\"price\": \"100\"," +
+                "\"luggageAllowed\": \"true\"" +
                 "}";
 
         newTicket2Json = "{" +
                 "\"flightId\": \"2\"," +
-                "\"price\": \"200\"" +
+                "\"price\": \"200\"," +
+                "\"luggageAllowed\": \"true\"" +
                 "}";
     }
 
