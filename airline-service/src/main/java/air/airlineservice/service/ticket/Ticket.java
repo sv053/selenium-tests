@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import java.util.Objects;
 
@@ -32,6 +33,7 @@ public class Ticket {
 
     @Column(nullable = false)
     @NotNull(message = "Price is mandatory")
+    @Positive(message = "Price must be positive")
     private Long price;
 
     @Column(name = "luggage_allowed", nullable = false)
