@@ -23,7 +23,7 @@ const SignUp = props => {
 
     return (
         <form onSubmit={event => submitPressed(event)}>
-            <div className="card-container row gx-5">
+            <div className="sign-up-container row m-lg-3">
                 <SignUpSection/>
                 <PersonalSection/>
                 <Footer/>

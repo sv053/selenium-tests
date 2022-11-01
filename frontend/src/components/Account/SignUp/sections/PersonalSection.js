@@ -20,11 +20,11 @@ const PersonalSection = () => {
                            placeholder="Enter nationality"/>
                 </div>
                 <div className="form-group mt-3">
-                    <label>Password number</label>
+                    <label>Passport number</label>
                     <input type="text"
                            className="form-control mt-1"
                            id="passwordNumber"
-                           placeholder="Enter password number"/>
+                           placeholder="Enter passport number"/>
                 </div>
                 <div className="form-group mt-3">
                     <label>Age</label>

@@ -6,6 +6,7 @@ import AccountPage from "./pages/AccountPage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import ErrorPage from "./pages/ErrorPage";
+import Footer from "./components/Footer/Footer";
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -54,6 +55,7 @@ function App() {
                     <Route exact path="/error" element={<ErrorPage/>}/>
                     <Route exact path="*" element={<ErrorPage message="Not found"/>}/>
                 </Routes>
+                <Footer/>
             </div>
         </HashRouter>
     );
