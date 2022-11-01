@@ -1,78 +1,73 @@
 package air.airlineservice.web.flights;
 
-import air.airlineservice.service.airline.Airline;
-import air.airlineservice.service.airline.AirlineService;
+import air.airlineservice.service.flight.Flight;
+import air.airlineservice.service.flight.FlightService;
+import air.airlineservice.web.airline.AirlineAccessHandler;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 import java.util.Optional;
 
 @Component
 public class FlightAccessHandler {
     private static final Logger logger = LogManager.getLogger(FlightAccessHandler.class);
-    private final AirlineService airlineService;
+
+    private final FlightService flightService;
+    private final AirlineAccessHandler accessHandler;
 
     @Autowired
-    public FlightAccessHandler(AirlineService airlineService) {
-        this.airlineService = airlineService;
+    public FlightAccessHandler(FlightService flightService,
+                               AirlineAccessHandler accessHandler) {
+        this.flightService = flightService;
+        this.accessHandler = accessHandler;
     }
 
     /**
-     * Decides whether the current user can post the flight with the
-     * specified airline ID.
+     * Decides whether the current user can post the specified flight.
      *
-     * @param airlineId ID of the airline of the flight to post
+     * @param flight flight to post
      *
      * @return true if access is available, false otherwise
      */
-    public boolean canPost(long airlineId) {
+    public boolean canPost(Flight flight) {
+        long airlineId = flight.getAirline().getId();
+        return accessHandler.canPatch(airlineId);
+    }
+
+    /**
+     * Decides whether the current user can patch the specified flight.
+     *
+     * @param flight flight to patch
+     *
+     * @return true if access is available, false otherwise
+     */
+    public boolean canPatch(Flight flight) {
+        return canPost(flight);
+    }
+
+    /**
+     * Decides whether the current user can delete the flight with the
+     * specified ID.
+     *
+     * @param id ID of the flight to delete
+     *
+     * @return true if access is available, false otherwise
+     */
+    public boolean canDelete(long id) {
         try {
-            Optional<Airline> airline = airlineService.findById(airlineId);
-            if (airline.isEmpty()) {
+            Optional<Flight> flight = flightService.findById(id);
+            if (flight.isEmpty()) {
                 return false;
             } else {
-                return hasAccess(airline.get().getOwner());
+                return canPost(flight.get());
             }
         } catch (Exception e) {
             logger.error(e);
             return false;
         }
-    }
-
-    private boolean hasAccess(String airlineOwner) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!authentication.isAuthenticated()) {
-            return false;
-        } else if (hasRole(authentication, "ADMIN")) {
-            return true;
-        } else {
-            return authentication.getName().equals(airlineOwner);
-        }
-    }
-
-    private boolean hasRole(Authentication authentication, String role) {
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        return authorities.stream()
-                .anyMatch(authority -> authority.getAuthority().equals(role));
-    }
-
-    /**
-     * Decides whether the current user can patch the flight with the
-     * specified airline ID.
-     *
-     * @param airlineId ID of the airline of the flight to post
-     *
-     * @return true if access is available, false otherwise
-     */
-    public boolean canPatch(long airlineId) {
-        return canPost(airlineId);
     }
 }

@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -81,5 +82,12 @@ public class TicketController {
     @PreAuthorize("@ticketAccessHandler.canPost(#ticket)")
     public Ticket post(@RequestBody @Valid Ticket ticket) {
         return ticketService.save(ticket);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("@ticketAccessHandler.canDelete(#id)")
+    public void deleteById(@PathVariable Long id) {
+        ticketService.deleteById(id);
     }
 }

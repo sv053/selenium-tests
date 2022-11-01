@@ -33,6 +33,18 @@ public interface AirlineService {
     Optional<Airline> findById(Long id);
 
     /**
+     * Looks for an airline with the specified name in the remote airline repository.
+     *
+     * @param name name of the airline to get
+     *
+     * @return the airline with the specified name in the remote airline repository
+     * or Optional#empty() if none found
+     *
+     * @throws RemoteResourceException if there is any problem with the remote airline repository
+     */
+    Optional<Airline> findByName(String name);
+
+    /**
      * Saves the specified airline in the remote airline repository.
      * Use the returned airline for further operations as the save operation
      * might have changed the airline instance completely.
