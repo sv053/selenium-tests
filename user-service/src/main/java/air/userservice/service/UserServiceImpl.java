@@ -134,12 +134,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteByLogin(String login) {
+    public void deleteByEmail(String email) {
         try {
-            deleteUser(login);
-            logger.info("User " + login + " deleted");
+            deleteUser(email);
+            logger.info("User " + email + " deleted");
         } catch (EmptyResultDataAccessException e) {
-            throw new IllegalModificationException("No user with login " + login, e);
+            throw new IllegalModificationException("No user with email " + email, e);
         } catch (Exception e) {
             throw new RemoteResourceException("User database unavailable", e);
         }

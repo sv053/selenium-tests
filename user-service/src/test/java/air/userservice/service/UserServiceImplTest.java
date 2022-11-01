@@ -148,7 +148,7 @@ public class UserServiceImplTest {
                 .thenReturn(Optional.empty()))
                 .when(userRepository).deleteById(user.getEmail());
 
-        userService.deleteByLogin(user.getEmail());
+        userService.deleteByEmail(user.getEmail());
 
         Optional<User> deleted = userService.findByEmail(user.getEmail());
         assertThat(deleted, is(Optional.empty()));
