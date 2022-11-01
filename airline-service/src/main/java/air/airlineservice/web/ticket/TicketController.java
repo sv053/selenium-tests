@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,6 +51,23 @@ public class TicketController {
     @GetMapping
     public List<Ticket> getAll() {
         return ticketService.findAll();
+    }
+
+    @GetMapping(params = "flight")
+    public List<Ticket> getAllByFlight(@RequestParam Long flight) {
+        return ticketService.findByFlightId(flight);
+    }
+
+    @GetMapping(params = {"flight", "price"})
+    public List<Ticket> getAllByFlightAndPrice(@RequestParam Long flight,
+                                               @RequestParam Long price) {
+        return ticketService.findByFlightIdAndPrice(flight, price);
+    }
+
+    @GetMapping(params = {"flight", "luggageAllowed"})
+    public List<Ticket> getAllByFlightWithLuggage(@RequestParam Long flight,
+                                                  @RequestParam Boolean luggageAllowed) {
+        return ticketService.findByFlightIdWithLuggage(flight, luggageAllowed);
     }
 
     @GetMapping(value = "/{id}")

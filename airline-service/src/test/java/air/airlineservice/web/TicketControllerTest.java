@@ -64,6 +64,33 @@ public class TicketControllerTest {
 
     @Test
     @WithAnonymousUser
+    public void shouldReturnTicketsOnTicketsGetByFlightRequest() throws Exception {
+        mvc.perform(get("/tickets?flight=1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void shouldReturnTicketsOnTicketsGetByFlightAndPriceRequest() throws Exception {
+        mvc.perform(get("/tickets?flight=1&price=100"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void shouldReturnTicketsOnTicketsGetByFlightWithLuggageRequest() throws Exception {
+        mvc.perform(get("/tickets?flight=1&luggageAllowed=true"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithAnonymousUser
     public void shouldReturnTicketByIdOnTicketGetRequest() throws Exception {
         mvc.perform(get("/tickets/1"))
                 .andDo(print())
