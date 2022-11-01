@@ -13,7 +13,6 @@ const SignUp = props => {
             password: e.target.elements.password.value,
             repeatPassword: e.target.elements.repeatPassword.value,
             name: e.target.elements.name.value,
-
             nationality: e.target.elements.nationality.value,
             passportNumber: e.target.elements.passportNumber.value,
             age: e.target.elements.age.value
@@ -23,7 +22,7 @@ const SignUp = props => {
 
     return (
         <form onSubmit={event => submitPressed(event)}>
-            <div className="card-container row gx-5">
+            <div className="sign-up-container row m-lg-3">
                 <SignUpSection/>
                 <PersonalSection/>
                 <Footer/>
