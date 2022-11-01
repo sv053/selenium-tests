@@ -34,12 +34,12 @@ const SignIn = props => {
                         </button>
                     </div>
                     <p className="forgot-password text-right mt-2">
-                        <a href="src/components/Account/SignIn/SignIn#/account/sign-up">
+                        <a href="#/account/sign-up">
                             Don't have an account?
                         </a>
                     </p>
                     <p className="forgot-password text-right mt-2">
-                        <a href="src/components/Account/SignIn/SignIn#/account/reset-password">
+                        <a href="#/account/reset-password">
                             Forgot password?
                         </a>
                     </p>
