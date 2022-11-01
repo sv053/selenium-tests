@@ -2,7 +2,9 @@ INSERT INTO airlines(name, description, owner, image_data)
 VALUES ('name1', 'description1', 'owner1', 'image1'),
        ('name2', 'description2', 'owner2', 'image2'),
        ('name3', 'description3', 'owner3', 'image3'),
-       ('name4', 'description4', 'owner4', 'image4');
+       ('name4', 'description4', 'owner4', 'image4'),
+       ('name5', 'description5', 'owner5', 'image5'),
+       ('name6', 'description6', 'owner6', 'image6');
 
 INSERT INTO flights(airline_id, from_country, from_airport, from_gate,
                     to_country, to_airport, to_gate, date_time)

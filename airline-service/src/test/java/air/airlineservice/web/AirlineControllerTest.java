@@ -16,11 +16,14 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
+import java.util.Optional;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -154,5 +157,41 @@ public class AirlineControllerTest {
     @WithAnonymousUser
     public void shouldDenyAirlinePatchingWhenUserIsNotAuthenticated() throws Exception {
         patchByIdAndExpect(1L, updatedAirline1Json, status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void shouldDeleteAirlineOnAirlineDeleteRequestWhenUserIsAdmin() throws Exception {
+        deleteByIdAndExpect(5L, status().isNoContent());
+
+        Optional<Airline> deleted = airlineService.findById(5L);
+        assertThat(deleted, is(Optional.empty()));
+    }
+
+    private void deleteByIdAndExpect(long id, ResultMatcher status) throws Exception {
+        mvc.perform(delete("/airlines/" + id))
+                .andDo(print())
+                .andExpect(status);
+    }
+
+    @Test
+    @WithMockUser(authorities = "USER", username = "owner6")
+    public void shouldDeleteAirlineOnAirlineDeleteRequestWhenUserResourceOwner() throws Exception {
+        deleteByIdAndExpect(6L, status().isNoContent());
+
+        Optional<Airline> deleted = airlineService.findById(6L);
+        assertThat(deleted, is(Optional.empty()));
+    }
+
+    @Test
+    @WithMockUser(authorities = "USER", username = "owner")
+    public void shouldDenyAirlineDeletionWhenUserIsNotResourceOwnerAdmin() throws Exception {
+        deleteByIdAndExpect(5L, status().isUnauthorized());
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void shouldDenyAirlineDeletionWhenUserIsNotAuthenticated() throws Exception {
+        deleteByIdAndExpect(5L, status().isUnauthorized());
     }
 }
