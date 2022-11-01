@@ -52,7 +52,7 @@ public interface FlightService {
      *
      * @return the saved flight
      *
-     * @throws IllegalModificationException either if a flight has invalid data or already exists
+     * @throws IllegalModificationException if a flight has invalid data
      * @throws RemoteResourceException if there is any problem with the remote flight repository
      */
     Flight save(Flight flight);
@@ -66,7 +66,7 @@ public interface FlightService {
      *
      * @return updated flight
      *
-     * @throws IllegalModificationException either if a flight has invalid data or does not exist
+     * @throws IllegalModificationException if a flight has invalid data
      * @throws RemoteResourceException if there is any problem with the remote flight repository
      */
     Flight update(Flight flight);

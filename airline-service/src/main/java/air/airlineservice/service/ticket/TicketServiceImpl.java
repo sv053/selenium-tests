@@ -109,9 +109,6 @@ public class TicketServiceImpl implements TicketService {
             return saved;
         } catch (IllegalModificationException | RemoteResourceException e) {
             throw e;
-        } catch (DataIntegrityViolationException e) {
-            String msg = "Such a ticket already exists: " + ticket.getId();
-            throw new IllegalModificationException(msg, e);
         } catch (Exception e) {
             throw new RemoteResourceException("Ticket database unavailable", e);
         }

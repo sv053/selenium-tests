@@ -76,7 +76,7 @@ public interface TicketService {
      *
      * @return the saved ticket
      *
-     * @throws IllegalModificationException either if a ticket has invalid data or already exists
+     * @throws IllegalModificationException if a ticket has invalid data
      * @throws RemoteResourceException if there is any problem with the remote ticket repository
      */
     Ticket save(Ticket ticket);
