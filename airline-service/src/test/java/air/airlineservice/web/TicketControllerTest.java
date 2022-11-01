@@ -37,13 +37,17 @@ public class TicketControllerTest {
     @BeforeAll
     public static void createNewFlightJson() {
         newTicket1Json = "{" +
-                "\"flightId\": \"1\"," +
+                "\"flight\":{ " +
+                    "\"id\": \"1\"" +
+                "}," +
                 "\"price\": \"100\"," +
                 "\"luggageAllowed\": \"true\"" +
                 "}";
 
         newTicket2Json = "{" +
-                "\"flightId\": \"2\"," +
+                "\"flight\":{ " +
+                    "\"id\": \"2\"" +
+                "}," +
                 "\"price\": \"200\"," +
                 "\"luggageAllowed\": \"true\"" +
                 "}";
