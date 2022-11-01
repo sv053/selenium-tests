@@ -60,6 +60,16 @@ public class AirlineServiceImpl implements AirlineService {
     }
 
     @Override
+    public Optional<Airline> findByName(String name) {
+        try {
+            Supplier<Optional<Airline>> findByName = () -> repository.findByName(name);
+            return circuitBreaker.decorateSupplier(findByName).get();
+        } catch (Exception e) {
+            throw new RemoteResourceException("Airline database unavailable", e);
+        }
+    }
+
+    @Override
     public Airline save(Airline airline) {
         try {
             validate(airline);

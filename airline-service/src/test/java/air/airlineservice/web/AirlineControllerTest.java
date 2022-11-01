@@ -94,6 +94,15 @@ public class AirlineControllerTest {
     }
 
     @Test
+    @WithAnonymousUser
+    public void shouldReturnAirlineByNameOnAirlinesGetRequest() throws Exception {
+        mvc.perform(get("/airlines?name=name4"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
     @WithMockUser(username = "new-owner", authorities = "USER")
     public void shouldReturnSavedAirlineOnAirlinesPostRequest() throws Exception {
         mvc.perform(post("/airlines")

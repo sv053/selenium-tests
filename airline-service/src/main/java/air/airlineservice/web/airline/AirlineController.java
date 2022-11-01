@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,6 +58,12 @@ public class AirlineController {
     public Airline getById(@PathVariable Long id) {
         return airlineService.findById(id)
                 .orElseThrow(() -> new  NoSuchElementException("No airline with ID " + id));
+    }
+
+    @GetMapping(params = "name")
+    public Airline getById(@RequestParam String name) {
+        return airlineService.findByName(name)
+                .orElseThrow(() -> new  NoSuchElementException("No airline with name " + name));
     }
 
     @PostMapping
