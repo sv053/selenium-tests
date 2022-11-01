@@ -74,7 +74,7 @@ public class AirlineController {
     }
 
     @PatchMapping(value = "/{id}")
-    @PreAuthorize("hasAuthority('USER') and #airline.owner == authentication.name or hasAuthority('ADMIN')")
+    @PreAuthorize("@airlineAccessHandler.canPatch(#id)")
     public Airline patchById(@PathVariable Long id,
                              @RequestBody Airline airline) {
         airline.setId(id);
