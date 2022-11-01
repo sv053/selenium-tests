@@ -33,7 +33,9 @@ public class DestinationTest {
 
     @Test
     public void shouldNotPassValidationWhenHasInvalidData() {
-        Destination destination = new Destination();
+        Destination destination = Destination.builder()
+                .withGate(-1L)
+                .build();
 
         int errors = validator.validate(destination).size();
         assertThat(errors, is(3));

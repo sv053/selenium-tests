@@ -35,7 +35,9 @@ public class TicketTest {
 
     @Test
     public void shouldNotPassValidationWhenHasInvalidData() {
-        Ticket ticket = new Ticket();
+        Ticket ticket = Ticket.builder()
+                .withPrice(-1L)
+                .build();
 
         int errors = validator.validate(ticket).size();
         assertThat(errors, is(3));
