@@ -23,7 +23,7 @@ const PersonalSection = () => {
                     <label>Passport number</label>
                     <input type="text"
                            className="form-control mt-1"
-                           id="passwordNumber"
+                           id="passportNumber"
                            placeholder="Enter passport number"/>
                 </div>
                 <div className="form-group mt-3">
