@@ -5,7 +5,7 @@ metadata:
   labels:
     app: airline-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: airline-service
@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: airline-service
-        image: air/airline-service:1.0
+        image: airtickets/airline-service:1.0
         imagePullPolicy: Always
         ports:
           - containerPort: 8080
