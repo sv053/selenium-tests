@@ -15,7 +15,7 @@
     </parent>
 
     <modules>
-
+        <module>tickets-booking</module>
     </modules>
 
     <properties>
