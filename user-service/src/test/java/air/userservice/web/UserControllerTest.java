@@ -48,11 +48,11 @@ public class UserControllerTest {
     @BeforeAll
     public static void createNewUserJson() {
         newUserJson = "{" +
-                "\"email\": \"email@gmail.com\"," +
+                "\"email\": \"emailnew@gmail.com\"," +
                 "\"password\": \"123456789\"," +
                 "\"name\": \"Alexander\"," +
                 "\"nationality\": \"nationality\"," +
-                "\"passportNumber\": \"ffergfrgre444\"," +
+                "\"passportNumber\": \"sdgh66g7\"," +
                 "\"age\": \"18\"" +
                 "}";
     }
@@ -64,7 +64,7 @@ public class UserControllerTest {
                 "\"password\": \"987654321\"," +
                 "\"name\": \"Mark\"," +
                 "\"nationality\": \"nationality2\"," +
-                "\"passportNumber\": \"fgfgr5t5t5\"," +
+                "\"passportNumber\": \"gh668909\"," +
                 "\"age\": \"22\"" +
                 "}";
 
@@ -73,7 +73,7 @@ public class UserControllerTest {
                 "\"password\": \"fkm4454\"," +
                 "\"name\": \"Mark\"," +
                 "\"nationality\": \"nationality3\"," +
-                "\"passportNumber\": \"fl3kmewjwei88\"," +
+                "\"passportNumber\": \"1234fght\"," +
                 "\"age\": \"40\"" +
                 "}";
     }
@@ -85,20 +85,20 @@ public class UserControllerTest {
     }
 
     private void getByEmailAndExpect(ResultMatcher status) throws Exception {
-        mvc.perform(get("/users").param("email", "e@gmail.com"))
+        mvc.perform(get("/users").param("email", "email@gmail.com"))
                 .andDo(print())
                 .andExpect(status)
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    @WithMockUser(authorities = "USER", username = "e@gmail.com")
+    @WithMockUser(authorities = "USER", username = "email@gmail.com")
     public void shouldReturnUserOnUserGetByEmailRequestWhenUserIsResourceOwner() throws Exception {
         getByEmailAndExpect(status().isOk());
     }
 
     @Test
-    @WithMockUser(authorities = "USER", username = "e2@gmail.com")
+    @WithMockUser(authorities = "USER", username = "email2@gmail.com")
     public void shouldDenyAccessToUserWhenUserIsNotResourceOwner() throws Exception {
         getByEmailAndExpect(status().isUnauthorized());
     }
@@ -127,10 +127,10 @@ public class UserControllerTest {
     @Test
     @WithMockUser(authorities = "ADMIN")
     public void shouldReturnUpdatedUserOnUsersPatchRequestWhenUserIsAdmin() throws Exception {
-        User initial = userService.findByEmail("e2@gmail.com").orElseThrow();
-        patchByEmailAndExpect("e2@gmail.com", updatedUser1Json, status().isOk());
+        User initial = userService.findByEmail("email2@gmail.com").orElseThrow();
+        patchByEmailAndExpect("email2@gmail.com", updatedUser1Json, status().isOk());
 
-        User updated = userService.findByEmail("e2@gmail.com").orElseThrow();
+        User updated = userService.findByEmail("email2@gmail.com").orElseThrow();
         assertThat(updated, is(not(equalTo(initial))));
     }
 
@@ -146,33 +146,33 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "e3@gmail.com", authorities = "USER")
+    @WithMockUser(username = "email3@gmail.com", authorities = "USER")
     public void shouldReturnUpdatedUserOnUsersPatchRequestWhenUserIsResourceOwner() throws Exception {
-        User initial = userService.findByEmail("e3@gmail.com").orElseThrow();
-        patchByEmailAndExpect("e3@gmail.com", updatedUser2Json, status().isOk());
+        User initial = userService.findByEmail("email3@gmail.com").orElseThrow();
+        patchByEmailAndExpect("email3@gmail.com", updatedUser2Json, status().isOk());
 
-        User updated = userService.findByEmail("e3@gmail.com").orElseThrow();
+        User updated = userService.findByEmail("email3@gmail.com").orElseThrow();
         assertThat(updated, is(not(equalTo(initial))));
     }
 
     @Test
-    @WithMockUser(username = "e2@gmail.com", authorities = "USER")
+    @WithMockUser(username = "email2@gmail.com", authorities = "USER")
     public void shouldDenyUserPatchingWhenUserIsNotResourceOwner() throws Exception {
-        patchByEmailAndExpect("e@gmail.com", updatedUser1Json, status().isUnauthorized());
+        patchByEmailAndExpect("email@gmail.com", updatedUser1Json, status().isUnauthorized());
     }
 
     @Test
     @WithAnonymousUser
     public void shouldDenyUserPatchingWhenUserIsNotAuthenticated() throws Exception {
-        patchByEmailAndExpect("e@gmail.com", updatedUser1Json, status().isUnauthorized());
+        patchByEmailAndExpect("email@gmail.com", updatedUser1Json, status().isUnauthorized());
     }
 
     @Test
     @WithMockUser(authorities = "ADMIN")
     public void shouldDeleteUserOnUserDeleteRequestWhenUserIsAdmin() throws Exception {
-        deleteByEmailAndExpect("e4@gmail.com", status().isNoContent());
+        deleteByEmailAndExpect("email4@gmail.com", status().isNoContent());
 
-        Optional<User> deleted = userService.findByEmail("e4@gmail.com");
+        Optional<User> deleted = userService.findByEmail("email4@gmail.com");
         assertThat(deleted, is(Optional.empty()));
     }
 
@@ -183,23 +183,23 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "e5@gmail.com", authorities = "USER")
+    @WithMockUser(username = "email5@gmail.com", authorities = "USER")
     public void shouldDeleteUserOnUserDeleteRequestWhenUserIsResourceOwner() throws Exception {
-        deleteByEmailAndExpect("e5@gmail.com", status().isNoContent());
+        deleteByEmailAndExpect("email5@gmail.com", status().isNoContent());
 
-        Optional<User> deleted = userService.findByEmail("e5@gmail.com");
+        Optional<User> deleted = userService.findByEmail("email5@gmail.com");
         assertThat(deleted, is(Optional.empty()));
     }
 
     @Test
-    @WithMockUser(username = "e@gmail.com", authorities = "USER")
+    @WithMockUser(username = "email@gmail.com", authorities = "USER")
     public void shouldDenyUserDeletionWhenUserIsNotResourceOwner() throws Exception {
-        deleteByEmailAndExpect("e5@gmail.com", status().isUnauthorized());
+        deleteByEmailAndExpect("email5@gmail.com", status().isUnauthorized());
     }
 
     @Test
     @WithAnonymousUser
     public void shouldDenyUserDeletionWhenUserIsNotAuthenticated() throws Exception {
-        deleteByEmailAndExpect("e5@gmail.com", status().isUnauthorized());
+        deleteByEmailAndExpect("email5@gmail.com", status().isUnauthorized());
     }
 }
