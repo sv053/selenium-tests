@@ -75,4 +75,16 @@ public class FlightAccessHandler {
     public boolean canPatch(long airlineId) {
         return canPost(airlineId);
     }
+
+    /**
+     * Decides whether the current user can delete the flight with the
+     * specified airline ID.
+     *
+     * @param airlineId ID of the airline of the flight to delete
+     *
+     * @return true if access is available, false otherwise
+     */
+    public boolean canDelete(long airlineId) {
+        return canPost(airlineId);
+    }
 }
