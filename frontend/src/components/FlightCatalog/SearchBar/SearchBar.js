@@ -2,7 +2,8 @@ import PropTypes from "prop-types";
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
-import { Link } from 'react-router-dom'
+import {Link} from "react-router-dom";
+import {Button} from "@mui/material";
 
 import './SearchBar.css'
 
@@ -16,35 +17,34 @@ const SearchBar = props => {
     }
 
     return (
-        <Navbar className="search-bar">
-            <Container>
-                <Nav className="me-auto">
-                    <Link className="nav-link"
-                          onClick={props.onShowAll}>
-                        All
-                    </Link>
-                    <input type="text"
-                           className="form-control nav-item search-bar-input"
-                           id="origin"
-                           required="true"
-                           placeholder="Enter origin"/>
-                    <input type="text"
-                           className="form-control nav-item search-bar-input"
-                           id="destination"
-                           required="true"
-                           placeholder="Enter destination"/>
-                    <input type="text"
-                           className="form-control nav-item search-bar-input"
-                           id="airline"
-                           required="true"
-                           placeholder="Enter airline"/>
-                    <Link className="nav-link"
-                           onClick={event => searchPressed(event)}>
-                        Search
-                    </Link>
-                </Nav>
-            </Container>
-        </Navbar>
+        <form onSubmit={event => searchPressed(event)}>
+            <Navbar className="search-bar">
+                <Container>
+                    <Nav className="me-auto">
+                        <Link className="navbar-brand"
+                              onClick={props.onShowAll}>
+                            All flights
+                        </Link>
+                        <input type="text"
+                               className="form-control nav-item search-bar-input"
+                               id="origin"
+                               placeholder="Enter origin"/>
+                        <input type="text"
+                               className="form-control nav-item search-bar-input"
+                               id="destination"
+                               placeholder="Enter destination"/>
+                        <input type="text"
+                               className="form-control nav-item search-bar-input"
+                               id="airline"
+                               placeholder="Enter airline"/>
+                        <Button className="navbar-brand"
+                                type="submit">
+                            Search
+                        </Button>
+                    </Nav>
+                </Container>
+            </Navbar>
+        </form>
     );
 }
 
