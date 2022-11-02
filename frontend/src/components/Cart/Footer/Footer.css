@@ -1,0 +1,25 @@
+@import '../../main.css';
+
+.footer-form {
+    height: 90%;
+    width: 90%;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    padding-top: 30px;
+    padding-bottom: 15px;
+    border-radius: 8px;
+    background-color: white;
+    margin-bottom: 25px;
+}
+
+.footer-form-content {
+    padding-left: 12%;
+    padding-right: 12%;
+}
+
+.footer-form-form-title {
+    text-align: center;
+    margin-bottom: 1em;
+    font-size: 24px;
+    color: rgb(34, 34, 34);
+    font-weight: 800;
+}

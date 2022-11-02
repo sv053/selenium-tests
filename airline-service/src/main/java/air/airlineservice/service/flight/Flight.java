@@ -39,6 +39,7 @@ public class Flight {
 
     @ManyToOne
     @JoinColumn(name = "airline_id", nullable = false)
+    @NotNull(message = "Airline is mandatory")
     private Airline airline;
 
     @Embedded
