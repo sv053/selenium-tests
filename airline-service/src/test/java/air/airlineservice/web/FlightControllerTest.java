@@ -131,8 +131,35 @@ public class FlightControllerTest {
 
     @Test
     @WithAnonymousUser
-    public void shouldReturnFlightsOnFlightsGetByAirlineRequest() throws Exception {
-        mvc.perform(get("/flights?airline=1"))
+    public void shouldReturnFlightsOnFlightsGetByAirlineIdRequest() throws Exception {
+        mvc.perform(get("/flights?airlineId=1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void shouldReturnFlightsOnFlightsGetByAirlineNameRequest() throws Exception {
+        mvc.perform(get("/flights?airlineName=name1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void shouldReturnFlightsOnFlightsGetByOriginAndDestinationRequest() throws Exception {
+        mvc.perform(get("/flights?origin=airport;destination=airport"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void shouldReturnFlightsOnFlightsGetByAirlineAndWayRequest() throws Exception {
+        mvc.perform(get("/flights?airlineName=name1origin=airport;destination=airport"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));

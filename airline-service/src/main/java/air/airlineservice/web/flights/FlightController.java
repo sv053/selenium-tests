@@ -55,9 +55,27 @@ public class FlightController {
         return flightService.findAll();
     }
 
-    @GetMapping(params = "airline")
-    public List<Flight> getAllByAirline(@RequestParam Long airline) {
-        return flightService.findByAirlineId(airline);
+    @GetMapping(params = "airlineId")
+    public List<Flight> getAllByAirlineId(@RequestParam Long airlineId) {
+        return flightService.findByAirlineId(airlineId);
+    }
+
+    @GetMapping(params = "airlineName")
+    public List<Flight> getAllByAirlineName(@RequestParam String airlineName) {
+        return flightService.findByAirlineName(airlineName);
+    }
+
+    @GetMapping(params = {"origin", "destination"})
+    public List<Flight> getAllByWay(@RequestParam String origin,
+                                    @RequestParam String destination) {
+        return flightService.findByOriginAndDestination(origin, destination);
+    }
+
+    @GetMapping(params = {"origin", "destination", "airlineName"})
+    public List<Flight> getAllByAirlineAndWay(@RequestParam String origin,
+                                              @RequestParam String destination,
+                                              @RequestParam String airlineName) {
+        return flightService.findByWayAndAirline(origin, destination, airlineName);
     }
 
     @GetMapping(value = "/{id}")
