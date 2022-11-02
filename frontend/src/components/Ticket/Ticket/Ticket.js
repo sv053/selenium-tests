@@ -1,17 +1,10 @@
 import PropTypes from "prop-types"
-import {NotificationManager} from "react-notifications"
 import {Button} from "@mui/material"
 import toPrettyDate from "../../../utils"
 
 import './TicketCard.css'
-import 'react-notifications/lib/notifications.css';
 
 const Ticket = props => {
-    const orderClicked = () => {
-        props.onOrderClick(props.id)
-        NotificationManager.info("Added to cart");
-    }
-
     const date = toPrettyDate(props.dateTime)
     return (
         <div className="card-form">
@@ -24,12 +17,12 @@ const Ticket = props => {
                     </div>
                     <div className="btn-group group">
                         <Button variant="outline-info info button"
-                                onClick={() => window.location = "#/flights/" + props.flightId}>
-                            See flight
+                                onClick={props.leftAction}>
+                            {props.leftButtonText}
                         </Button>
                         <Button variant="primary info button"
-                                onClick={orderClicked}>
-                            {"Add to cart for $" + props.price}
+                                onClick={props.rightAction}>
+                            {props.rightButtonText}
                         </Button>
                     </div>
                 </div>
@@ -40,14 +33,15 @@ const Ticket = props => {
 
 Ticket.propTypes = {
     id: PropTypes.number.isRequired,
-    flightId: PropTypes.string.isRequired,
     airline: PropTypes.string.isRequired,
     origin: PropTypes.string.isRequired,
     destination: PropTypes.string.isRequired,
     dateTime: PropTypes.string.isRequired,
     luggageAllowed: PropTypes.bool.isRequired,
-    price: PropTypes.number.isRequired,
-    onOrderClick: PropTypes.func.isRequired
+    rightButtonText: PropTypes.string.isRequired,
+    leftButtonText: PropTypes.string.isRequired,
+    rightAction: PropTypes.func.isRequired,
+    leftAction: PropTypes.func.isRequired
 };
 
 export default Ticket

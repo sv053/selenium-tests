@@ -1,15 +1,9 @@
 import PropTypes from "prop-types"
-import {useEffect} from "react"
 import ClipLoader from "react-spinners/ClipLoader"
-import Ticket from "../Ticket/Ticket"
 
 import './TicketList.css'
 
 const TicketList = props => {
-    useEffect(() => {
-        props.onLoad(props.flightId)
-    }, [])
-
     if ((!props.items || props.items.length === 0) && !props.loading) {
         return emptyList()
     } else {
@@ -20,9 +14,6 @@ const TicketList = props => {
 TicketList.propTypes = {
     items: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
-    flightId: PropTypes.string.isRequired,
-    onLoad: PropTypes.func.isRequired,
-    onOrderClick: PropTypes.func.isRequired
 }
 
  const emptyList = () => {
@@ -35,7 +26,7 @@ TicketList.propTypes = {
     );
 }
 
-const list = (items, flightId, isLoading, onOrderClick) => {
+const list = (items, flightId, isLoading) => {
     return (
         <div>
             <div className="spinner">
@@ -47,15 +38,7 @@ const list = (items, flightId, isLoading, onOrderClick) => {
                         { items.map((item, index) => {
                             return (
                                 <div key={index} className="col-md-6 col-lg-3">
-                                    <Ticket id={item.id}
-                                            flightId={flightId}
-                                            airline={item.flight.airline.name}
-                                            origin={item.flight.from.country + ", " + item.flight.from.airport}
-                                            destination={item.flight.to.country + ", " + item.flight.to.airport}
-                                            dateTime={item.flight.dateTime}
-                                            price={item.price}
-                                            luggageAllowed={item.luggageAllowed}
-                                            onOrderClick={onOrderClick}/>
+                                    {item}
                                 </div>
                             );
                         })}

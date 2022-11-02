@@ -1,11 +1,11 @@
 import PropTypes from "prop-types"
 import {useLocation } from "react-router-dom"
-import TicketList from "../components/Ticket/TicketList/TicketList"
+import TicketCatalog from "../components/TicketCatalog/TicketCatalog";
 
 const TicketCatalogPage = props => {
     const id = new URLSearchParams(useLocation().search).get("flight")
     return (
-        <TicketList {...props} flightId={id}/>
+        <TicketCatalog {...props} flightId={id}/>
     );
 }
 
