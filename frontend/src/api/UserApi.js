@@ -15,7 +15,7 @@ export const postUser = async data => {
 
 export const getUserByEmail = async (email, password) => {
     return await getAuthToken(email, password).then(token => {
-        return fetch(Config.BASE_URL + 'users?email=' + email, {
+        return fetch(Config.BASE_URL + '/users?email=' + email, {
             method: 'GET',
             headers: {
                 'Authorization': token.token_type + ' ' + token.access_token,

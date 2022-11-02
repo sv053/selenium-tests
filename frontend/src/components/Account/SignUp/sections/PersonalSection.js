@@ -10,6 +10,7 @@ const PersonalSection = () => {
                     <input type="text"
                            className="form-control mt-1"
                            id="name"
+                           required="true"
                            placeholder="Enter name"/>
                 </div>
                 <div className="form-group mt-3">
@@ -17,6 +18,7 @@ const PersonalSection = () => {
                     <input type="text"
                            className="form-control mt-1"
                            id="nationality"
+                           required="true"
                            placeholder="Enter nationality"/>
                 </div>
                 <div className="form-group mt-3">
@@ -24,6 +26,7 @@ const PersonalSection = () => {
                     <input type="text"
                            className="form-control mt-1"
                            id="passportNumber"
+                           required="true"
                            placeholder="Enter passport number"/>
                 </div>
                 <div className="form-group mt-3">
@@ -31,6 +34,7 @@ const PersonalSection = () => {
                     <input type="number"
                            className="form-control mt-1"
                            id="age"
+                           required="true"
                            placeholder="Enter age"/>
                 </div>
             </div>

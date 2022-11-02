@@ -44,28 +44,40 @@ const App = () => {
         setFlights({items: [], loading: true})
         getAllFlights()
             .then(data => setFlights({items: data, loading: false}))
-            .catch(e => window.location = "#/error?message=" + e.message)
+            .catch(e => {
+                setFlights({items: [], loading: false})
+                window.location = "#/error?message=" + e.message
+            })
     }
 
     const loadFlightDetails = id => {
         setFlightDetails({details: null, loading: true})
         getFlightById(id)
             .then(data => setFlightDetails({details: data, loading: false}))
-            .catch(e => window.location = "#/error?message=" + e.message)
+            .catch(e => {
+                setFlightDetails({details: null, loading: false})
+                window.location = "#/error?message=" + e.message
+            })
     }
 
     const loadTickets = flightId => {
-        setFlights({items: [], loading: true})
+        setTickets({items: [], loading: true})
         getAllTicketsByFlight(flightId)
             .then(data => setTickets({items: data, loading: false}))
-            .catch(e => window.location = "#/error?message=" + e.message)
+            .catch(e => {
+                setTickets({items: [], loading: false})
+                window.location = "#/error?message=" + e.message
+            })
     }
 
-    const orderTicketClicked = ticketId => {
+    const orderTicket = ticketId => {
         setCart({items: cart.items, loading: true})
         getTicketById(ticketId)
             .then(data => addToCart(data))
-            .catch(e => window.location = "#/error?message=" + e.message)
+            .catch(e => {
+                setCart({items: cart.items, loading: false})
+                window.location = "#/error?message=" + e.message
+            })
     }
 
     const addToCart = (ticket) => {
@@ -92,20 +104,31 @@ const App = () => {
         }
     }
 
-    const signInPressed = (email, password) => {
+    const signIn = (email, password) => {
         setAccount({data: null, loading: true})
         getUserByEmail(email, password)
             .then(data => setAccount({data: data, loading: false}))
             .then(e => window.location = "#/account")
-            .catch(e => window.location = "#/error?message=" + e.message)
+            .catch(e => {
+                setAccount({data: null, loading: false})
+                window.location = "#/error?message=" + e.message
+            })
     }
 
-    const signUpPressed = formData => {
+    const signUp = formData => {
         setAccount({data: null, loading: true})
         postUser(formData)
             .then(data => setAccount({data: data, loading: false}))
             .then(e => window.location = "#/account")
-            .catch(e => window.location = "#/error?message=" + e.message)
+            .catch(e => {
+                setAccount({data: null, loading: false})
+                window.location = "#/error?message=" + e.message
+            })
+    }
+
+    const singOut = () => {
+        setAccount({data: null, loading: false})
+        window.location = "#/account"
     }
 
     return (
@@ -127,7 +150,7 @@ const App = () => {
                         <TicketCatalogPage items={ticketCatalog.items}
                                            loading={ticketCatalog.loading}
                                            onLoad={loadTickets}
-                                           onOrderClick={orderTicketClicked}/>}/>
+                                           onOrderClick={orderTicket}/>}/>
                     <Route exact path="/cart" element={
                         <CartPage items={cart.items}
                                   loading={cart.loading}
@@ -136,11 +159,12 @@ const App = () => {
                     <Route exact path="/account" element={
                         <AccountPage data={account.data}
                                      loading={account.loading}
-                                     onLoad={loadAccount}/>}/>
+                                     onLoad={loadAccount}
+                                     onSignOut={singOut}/>}/>
                     <Route exact path="/account/sign-in" element={
-                        <SignInPage onSubmit={signInPressed}/>}/>
+                        <SignInPage onSubmit={signIn}/>}/>
                     <Route exact path="/account/sign-up" element={
-                        <SignUpPage onSubmit={signUpPressed}/>}/>
+                        <SignUpPage onSubmit={signUp}/>}/>
                     <Route exact path="/error" element={<ErrorPage/>}/>
                     <Route exact path="*" element={<ErrorPage message="Not found"/>}/>
                 </Routes>
