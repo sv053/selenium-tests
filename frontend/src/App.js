@@ -50,6 +50,16 @@ const App = () => {
             })
     }
 
+    const searchForFlights = (origin, destination) => {
+        setFlights({items: [], loading: true})
+        getAllFlights()
+            .then(data => setFlights({items: data, loading: false}))
+            .catch(e => {
+                setFlights({items: [], loading: false})
+                window.location = "#/error?message=" + e.message
+            })
+    }
+
     const loadFlightDetails = id => {
         setFlightDetails({details: null, loading: true})
         getFlightById(id)
@@ -141,7 +151,8 @@ const App = () => {
                     <Route exact path="/flights" element={
                         <FlightCatalogPage items={flightCatalog.items}
                                            loading={flightCatalog.loading}
-                                           onLoad={loadFlights}/>}/>
+                                           onLoad={loadFlights}
+                                           onSearch={searchForFlights}/>}/>
                     <Route exact path="/flights/:id" element={
                         <FlightDetailsPage details={flightDetails.details}
                                            loading={flightDetails.loading}
