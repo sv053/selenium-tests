@@ -6,8 +6,8 @@ const CatalogItem = props => {
         <FlightCard{...props}
                    buttonLeftText="Show details"
                    buttonRightText={"See tickets"}
-                   actionLeft={() => window.location="/#/flights/" + props.id}
-                   actionRight={() => window.location="/#/tickets?flight=" + props.id}/>
+                   actionLeft={() => window.location="#/flights/" + props.id}
+                   actionRight={() => window.location="#/tickets?flight=" + props.id}/>
     );
 }
 
