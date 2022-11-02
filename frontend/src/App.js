@@ -9,8 +9,10 @@ import ErrorPage from "./pages/ErrorPage"
 import Footer from "./components/Footer/Footer"
 import FlightCatalogPage from "./pages/FlightCatalogPage"
 import FlightDetailsPage from "./pages/FlightDetailsPage"
+import TicketCatalogPage from "./pages/TicketCatalogPage"
 import {getUserByEmail, postUser} from "./api/UserApi"
 import {getAllFlights, getFlightById} from "./api/FlightApi"
+import {getAllTicketsByFlight} from "./api/TicketApi"
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -22,6 +24,10 @@ const App = () => {
     })
     const [flightDetails, setFlightDetails] = useState({
         details: null,
+        loading: false,
+    })
+    const [ticketCatalog, setTickets] = useState({
+        items: [],
         loading: false,
     })
     const [account, setAccount] = useState({
@@ -41,6 +47,17 @@ const App = () => {
         getFlightById(id)
             .then(data => setFlightDetails({details: data, loading: false}))
             .catch(e => window.location = "#/error?message=" + e.message)
+    }
+
+    const loadTickets = flightId => {
+        setFlights({items: [], loading: true})
+        getAllTicketsByFlight(flightId)
+            .then(data => setTickets({items: data, loading: false}))
+            .catch(e => window.location = "#/error?message=" + e.message)
+    }
+
+    const orderTicketClicked = ticketId => {
+        console.log(ticketId)
     }
 
     const loadAccount = () => {
@@ -80,6 +97,11 @@ const App = () => {
                         <FlightDetailsPage details={flightDetails.details}
                                            loading={flightDetails.loading}
                                            onLoad={loadFlightDetails}/>}/>
+                    <Route exact path="/tickets" element={
+                        <TicketCatalogPage items={ticketCatalog.items}
+                                           loading={ticketCatalog.loading}
+                                           onLoad={loadTickets}
+                                           onOrderClick={orderTicketClicked}/>}/>
                     <Route exact path="/account" element={
                         <AccountPage data={account.data}
                                      loading={account.loading}
