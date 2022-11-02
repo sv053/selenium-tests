@@ -1,13 +1,13 @@
 @import '../../main.css';
 
-.search-bar {
+.tickets-search-bar {
     border-radius: 12px;
     background-color: #cacaca;
     color: #000000;
-    margin-bottom: 15px;
+    margin-top: 30px;
 }
 
-.search-bar-input {
+.tickets-search-bar-input {
     margin-left: 7px;
     margin-right: 7px;
 }

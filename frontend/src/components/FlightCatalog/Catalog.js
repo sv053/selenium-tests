@@ -10,7 +10,7 @@ const Catalog = props => {
     }, [])
 
     if ((!props.items || props.items.length === 0) && !props.loading) {
-        return emptyCatalog()
+        return emptyCatalog(props.onLoad, props.onSearch)
     } else {
         const items = props.items.map(item => {
             return {
@@ -33,13 +33,17 @@ Catalog.propTypes = {
     onLoad: PropTypes.func.isRequired,
 }
 
-const emptyCatalog = () => {
+const emptyCatalog = (onLoad, onSearch) => {
     return (
-        <div className="container-fluid align-content-center">
-            <div className="row">
-                <div className="text-center text">No flights</div>
+        <section className="card-container">
+            <div className="container">
+                <SearchBar onShowAll={onLoad}
+                           onSearch={onSearch}/>
+                <div className="row">
+                    <h2 className="text-center">No flights found</h2>
+                </div>
             </div>
-        </div>
+        </section>
     );
 }
 

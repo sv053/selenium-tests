@@ -10,33 +10,22 @@ import './SearchBar.css'
 const SearchBar = props => {
     const searchPressed = (e) => {
         e.preventDefault()
-        props.onSearch(
-            e.target.elements.origin.value,
-            e.target.elements.destination.value,
-            e.target.elements.airline.value)
+        props.onSearch(props.flightId, e.target.elements.price.value)
     }
 
     return (
         <form onSubmit={event => searchPressed(event)}>
-            <Navbar className="search-bar">
+            <Navbar className="tickets-search-bar">
                 <Container>
                     <Nav className="me-auto">
                         <Link className="navbar-brand"
                               onClick={props.onShowAll}>
-                            All flights
+                            All tickets
                         </Link>
                         <input type="text"
-                               className="form-control nav-item search-bar-input"
-                               id="origin"
-                               placeholder="Enter origin"/>
-                        <input type="text"
-                               className="form-control nav-item search-bar-input"
-                               id="destination"
-                               placeholder="Enter destination"/>
-                        <input type="text"
-                               className="form-control nav-item search-bar-input"
-                               id="airline"
-                               placeholder="Enter airline"/>
+                               className="form-control nav-item tickets-search-bar-input"
+                               id="price"
+                               placeholder="Enter price"/>
                         <Button className="navbar-brand"
                                 type="submit">
                             Search
@@ -49,6 +38,7 @@ const SearchBar = props => {
 }
 
 SearchBar.propTypes = {
+    flightId: PropTypes.string.isRequired,
     onShowAll: PropTypes.func.isRequired,
     onSearch: PropTypes.func.isRequired
 }

@@ -12,8 +12,14 @@ import FlightDetailsPage from "./pages/FlightDetailsPage"
 import TicketCatalogPage from "./pages/TicketCatalogPage"
 import CartPage from "./pages/CartPage"
 import {getUserByEmail, postUser} from "./api/UserApi"
-import {getAllFlights, getFlightById} from "./api/FlightApi"
-import {getAllTicketsByFlight, getTicketById} from "./api/TicketApi"
+import {
+    getAllFlights,
+    getFlightByAirlineAndWay,
+    getFlightByAirlineName,
+    getFlightById,
+    getFlightByOriginAndDest
+} from "./api/FlightApi"
+import {getAllTicketsByFlight, getAllTicketsByFlightAndPrice, getTicketById} from "./api/TicketApi"
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -50,14 +56,26 @@ const App = () => {
             })
     }
 
-    const searchForFlights = (origin, destination) => {
+    const searchForFlights = (origin, destination, airline) => {
+        const load = data => {
+            data.then(data => setFlights({items: data, loading: false}))
+                .catch(e => {
+                    setFlights({items: [], loading: false})
+                    window.location = "#/error?message=" + e.message
+                })
+        }
+
+        const items = flightCatalog.items
         setFlights({items: [], loading: true})
-        getAllFlights()
-            .then(data => setFlights({items: data, loading: false}))
-            .catch(e => {
-                setFlights({items: [], loading: false})
-                window.location = "#/error?message=" + e.message
-            })
+        if (origin && destination && airline) {
+            load(getFlightByAirlineAndWay(origin, destination, airline))
+        } else if (origin && destination) {
+            load(getFlightByOriginAndDest(origin, destination))
+        } else if (airline) {
+            load(getFlightByAirlineName(airline))
+        } else {
+            setFlights({items: items, loading: false})
+        }
     }
 
     const loadFlightDetails = id => {
@@ -78,6 +96,25 @@ const App = () => {
                 setTickets({items: [], loading: false})
                 window.location = "#/error?message=" + e.message
             })
+    }
+
+    const searchForTickets = (flightId, price) => {
+        const load = data => {
+            data.then(data => setTickets({items: data, loading: false}))
+                .catch(e => {
+                    setTickets({items: [], loading: false})
+                    window.location = "#/error?message=" + e.message
+                })
+        }
+
+        const items = ticketCatalog.items
+        setTickets({items: [], loading: true})
+
+        if (price !== undefined && price !== null) {
+            load(getAllTicketsByFlightAndPrice(flightId, price))
+        } else {
+            setTickets({items: items, loading: false})
+        }
     }
 
     const orderTicket = ticketId => {
@@ -161,6 +198,7 @@ const App = () => {
                         <TicketCatalogPage items={ticketCatalog.items}
                                            loading={ticketCatalog.loading}
                                            onLoad={loadTickets}
+                                           onSearch={searchForTickets}
                                            onOrderClick={orderTicket}/>}/>
                     <Route exact path="/cart" element={
                         <CartPage items={cart.items}
