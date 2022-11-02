@@ -7,7 +7,7 @@ const FooterSection = props => {
             <div className="form-group mt-3">
                 <div className="d-grid gap-2 ">
                     <a className="btn btn-primary button"
-                        href={"#tickets?flight=" + props.id}>
+                        href={"#/tickets?flight=" + props.id}>
                         Show tickets
                     </a>
                 </div>
