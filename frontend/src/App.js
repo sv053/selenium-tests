@@ -126,6 +126,11 @@ const App = () => {
             })
     }
 
+    const singOut = () => {
+        setAccount({data: null, loading: false})
+        window.location = "#/account"
+    }
+
     return (
         <HashRouter>
             <NotificationContainer/>
@@ -154,7 +159,8 @@ const App = () => {
                     <Route exact path="/account" element={
                         <AccountPage data={account.data}
                                      loading={account.loading}
-                                     onLoad={loadAccount}/>}/>
+                                     onLoad={loadAccount}
+                                     onSignOut={singOut}/>}/>
                     <Route exact path="/account/sign-in" element={
                         <SignInPage onSubmit={signIn}/>}/>
                     <Route exact path="/account/sign-up" element={
