@@ -10,9 +10,10 @@ import Footer from "./components/Footer/Footer"
 import FlightCatalogPage from "./pages/FlightCatalogPage"
 import FlightDetailsPage from "./pages/FlightDetailsPage"
 import TicketCatalogPage from "./pages/TicketCatalogPage"
+import CartPage from "./pages/CartPage"
 import {getUserByEmail, postUser} from "./api/UserApi"
 import {getAllFlights, getFlightById} from "./api/FlightApi"
-import {getAllTicketsByFlight} from "./api/TicketApi"
+import {getAllTicketsByFlight, getTicketById} from "./api/TicketApi"
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -29,6 +30,10 @@ const App = () => {
     const [ticketCatalog, setTickets] = useState({
         items: [],
         loading: false,
+    })
+    const [cart, setCart] = useState({
+        items: [],
+        loading: false
     })
     const [account, setAccount] = useState({
         data: null,
@@ -57,7 +62,28 @@ const App = () => {
     }
 
     const orderTicketClicked = ticketId => {
-        console.log(ticketId)
+        setCart({items: cart.items, loading: true})
+        getTicketById(ticketId)
+            .then(data => addToCart(data))
+            .catch(e => window.location = "#/error?message=" + e.message)
+    }
+
+    const addToCart = (ticket) => {
+        ticket.numberInCart = (cart.items.length === 0) ? 1 : cart.items.length + 1
+
+        const items = [...cart.items]
+        items.push(ticket)
+        setCart({items: items, loading: false})
+    }
+
+    const loadCart = () => {
+        console.log("Cart opened")
+    }
+
+    const removeFromCart = numberInCart => {
+        console.log("Remove " + numberInCart)
+        let items = cart.items.filter(item => item.numberInCart !== numberInCart)
+        setCart({items: items, loading: false})
     }
 
     const loadAccount = () => {
@@ -102,6 +128,11 @@ const App = () => {
                                            loading={ticketCatalog.loading}
                                            onLoad={loadTickets}
                                            onOrderClick={orderTicketClicked}/>}/>
+                    <Route exact path="/cart" element={
+                        <CartPage items={cart.items}
+                                  loading={cart.loading}
+                                  onLoad={loadCart}
+                                  onRemove={removeFromCart}/>}/>
                     <Route exact path="/account" element={
                         <AccountPage data={account.data}
                                      loading={account.loading}
