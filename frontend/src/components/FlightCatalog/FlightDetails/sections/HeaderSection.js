@@ -1,9 +1,11 @@
 import PropTypes from "prop-types"
 import ImageViewer from "./ImageViewer"
+import toPrettyDate from "../../../../utils";
 
 import '../FlightDetails.css'
 
 const HeaderSection = props => {
+    const date = toPrettyDate(props.dateTime)
     return (
         <div className="card-form">
             <div className="card-form-content">
@@ -14,7 +16,7 @@ const HeaderSection = props => {
                 </div>
                 <div className="form-group mt-3">
                     <label>Date and time:</label>
-                    <div className="form-text">{props.dateTime}</div>
+                    <div className="form-text">{date}</div>
                 </div>
                 <div className="form-group mt-3">
                     <ImageViewer images={[props.image]} name={props.airline}/>
