@@ -40,6 +40,8 @@ spec:
           value: prod
         - name: SERVER_PORT
           value: "8080"
+        - name: SPRING.JPA.HIBERNATE.DDL_AUTO
+          value: update 
         - name: SPRING_DATASOURCE_URL
           valueFrom:
             secretKeyRef:
