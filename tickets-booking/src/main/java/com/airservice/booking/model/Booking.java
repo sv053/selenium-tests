@@ -13,11 +13,13 @@ public class Booking {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(name="user_id", nullable = false)
+    @NotBlank()
     private String userId;
-    @Column(nullable = false)
+    @Column(name="flight_id", nullable = false)
     @NotBlank()
     private String flightId;
-    @Column(nullable = false)
+    @Column(name="booking_datetime", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private LocalDateTime dateTime;
 
