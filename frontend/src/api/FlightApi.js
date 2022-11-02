@@ -19,3 +19,25 @@ export const getFlightById = async id => {
         .then(handleErrors)
         .then(response => response.json())
 }
+
+export const getFlightByAirlineName = async name => {
+    return await fetch(Config.BASE_URL  + "/flights?airlineName=" + name)
+        .then(handleErrors)
+        .then(response => response.json())
+}
+
+export const getFlightByOriginAndDest = async (origin, destination) => {
+    return await fetch(Config.BASE_URL  + "/flights?origin=" + origin +
+                                          "&destination=" + destination)
+        .then(handleErrors)
+        .then(response => response.json())
+}
+
+export const getFlightByAirlineAndWay = async (airline, origin, destination) => {
+    return await fetch(Config.BASE_URL  + "/flights?origin=" + origin +
+                                          "&destination=" + destination +
+                                          "&airline=" + airline)
+        .then(handleErrors)
+        .then(response => response.json())
+}
+
