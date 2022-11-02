@@ -3,8 +3,8 @@ import '../Account.css'
 
 const PersonalSection = props => {
     return (
-        <div className="auth-form">
-            <div className="auth-form-content">
+        <div className="account-form">
+            <div className="account-form-content">
                 <h3 className="card-form-title">Personal data</h3>
                 <div className="form-group mt-3">
                     <label>Name:</label>
