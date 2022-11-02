@@ -9,7 +9,7 @@ const Catalog = props => {
     }, [])
 
     if ((!props.items || props.items.length === 0) && !props.loading) {
-        return emptyList()
+        return emptyCatalog()
     } else {
         const items = props.items.map(item => {
             return {
@@ -21,7 +21,7 @@ const Catalog = props => {
                 dateTime: item.dateTime
             }
         })
-        return list(items, props.loading)
+        return catalog(items, props.loading)
     }
 }
 
@@ -32,7 +32,7 @@ Catalog.propTypes = {
 }
 
 
-const emptyList = () => {
+const emptyCatalog = () => {
     return (
         <div className="container-fluid align-content-center">
             <div className="row">
@@ -42,13 +42,13 @@ const emptyList = () => {
     );
 }
 
-const list = (items, isLoading) => {
+const catalog = (items, isLoading) => {
     return (
         <div>
             <div className="spinner">
                 <ClipLoader loading={isLoading}/>
             </div>
-            <section className="section-flights">
+            <section className="card-container">
                 <div className="container">
                     <div className="row">
                         { items.map((item, index) => {
