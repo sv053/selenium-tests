@@ -1,6 +1,6 @@
 package com.airservice.booking.controller;
 
-import com.airservice.booking.BookingApplication;
+import com.airservice.booking.service.BookingService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -9,10 +9,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -21,10 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Tag("category.IntegrationTest")
 @SpringBootTest
-@ContextConfiguration(classes= BookingApplication.class)
-//@WebMvcTest(controllers = BookingController.class)
 @AutoConfigureMockMvc
 class BookingControllerTest {
 
@@ -33,12 +28,13 @@ class BookingControllerTest {
     private static String minDateTime;
     private static String maxDateTime;
     @Autowired
-    private static MockMvc mockMvc;
+    private MockMvc mockMvc;
+
     @Autowired
-    BookingController bookingController;
+    private BookingService bookingService;
 
     @BeforeAll
-    public static void init() {
+    private static void init() {
         minDateTime = LocalDateTime.MIN.toString();
         maxDateTime = LocalDateTime.MAX.toString();
         newBookingJson = "{" +
@@ -66,7 +62,9 @@ class BookingControllerTest {
 
     @Test
     void shouldReturnAllFoundBookings() throws Exception {
-        mockMvc.perform(get(""))
+        mockMvc.perform(post("/")
+                .content(newBookingJson));
+        mockMvc.perform(get("/"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -82,7 +80,7 @@ class BookingControllerTest {
 
     @Test
     void postAndExpect(String data, ResultMatcher status) throws Exception {
-        mockMvc.perform(post("/booking/")
+        mockMvc.perform(post("/booking")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(data)
                         .accept(MediaType.APPLICATION_JSON))

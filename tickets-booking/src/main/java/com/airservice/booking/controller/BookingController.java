@@ -2,6 +2,7 @@ package com.airservice.booking.controller;
 
 import com.airservice.booking.model.Booking;
 import com.airservice.booking.service.BookingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/booking")
 public class BookingController {
+
     private final BookingService bookingService;
 
     public BookingController(BookingService bookingService) {
