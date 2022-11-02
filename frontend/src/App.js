@@ -56,6 +56,27 @@ const App = () => {
             })
     }
 
+    const searchForFlights = (origin, destination, airline) => {
+        const load = data => {
+            data.then(data => setFlights({items: data, loading: false}))
+                .catch(e => {
+                    setFlights({items: [], loading: false})
+                    window.location = "#/error?message=" + e.message
+                })
+        }
+
+        const items = flightCatalog.items
+        setFlights({items: [], loading: true})
+        if (origin && destination && airline) {
+            load(getFlightByAirlineAndWay(origin, destination, airline))
+        } else if (origin && destination) {
+            load(getFlightByOriginAndDest(origin, destination))
+        } else if (airline) {
+            load(getFlightByAirlineName(airline))
+        } else {
+            setFlights({items: items, loading: false})
+        }
+    }
 
     const loadFlightDetails = id => {
         setFlightDetails({details: null, loading: true})
