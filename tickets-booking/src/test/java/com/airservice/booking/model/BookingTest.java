@@ -82,6 +82,5 @@ class BookingTest {
                 .build();
         assertNotEquals(booking1, booking2);
     }
-
-
 }
+
