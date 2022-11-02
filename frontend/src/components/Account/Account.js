@@ -19,7 +19,7 @@ const Account = props => {
 }
 
 Account.propTypes = {
-    data: PropTypes.object.isRequired,
+    data: PropTypes.object,
     loading: PropTypes.bool.isRequired,
     onLoad: PropTypes.func.isRequired
 }
