@@ -10,7 +10,7 @@ import './SearchBar.css'
 const SearchBar = props => {
     const searchPressed = (e) => {
         e.preventDefault()
-        props.onSearch(e.target.elements.price.value)
+        props.onSearch(props.flightId, e.target.elements.price.value)
     }
 
     return (
@@ -38,6 +38,7 @@ const SearchBar = props => {
 }
 
 SearchBar.propTypes = {
+    flightId: PropTypes.string.isRequired,
     onShowAll: PropTypes.func.isRequired,
     onSearch: PropTypes.func.isRequired
 }

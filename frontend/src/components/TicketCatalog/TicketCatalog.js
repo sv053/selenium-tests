@@ -24,7 +24,8 @@ const TicketCatalog = props => {
 
     return (
         <Container>
-            <SearchBar onShowAll={() => props.onLoad(props.flightId)}
+            <SearchBar flightId={props.flightId}
+                       onShowAll={() => props.onLoad(props.flightId)}
                        onSearch={props.onSearch}/>
             <TicketList items={items}
                         loading={props.loading}/>
