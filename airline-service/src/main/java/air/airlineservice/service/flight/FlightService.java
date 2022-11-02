@@ -32,6 +32,44 @@ public interface FlightService {
     List<Flight> findByAirlineId(long airlineId);
 
     /**
+     * Looks for all flights from the airline with the specified name in the remote flight repository.
+     *
+     * @param name name of the airline with flights to find
+     *
+     * @return all the flights from the airline with the specified name in the remote flight repository
+     *
+     * @throws RemoteResourceException if there is any problem with the remote flight repository
+     */
+    List<Flight> findByAirlineName(String name);
+
+    /**
+     * Looks for all flights with the specified origin and destination in the remote flight repository.
+     *
+     * @param origin flight origin airport
+     * @param destination flight destination airport
+     *
+     * @return aal flights with the specified origin and destination in the remote flight repository
+     *
+     * @throws RemoteResourceException if there is any problem with the remote flight repository
+     */
+    List<Flight> findByOriginAndDestination(String origin, String destination);
+
+    /**
+     * Looks for all flights with the specified origin, destination and airline
+     * in the remote flight repository.
+     *
+     * @param origin flight origin airport
+     * @param destination flight destination airport
+     * @param airline flight airline
+     *
+     * @return aal flights with the specified origin, destination and airline
+     * in the remote flight repository
+     *
+     * @throws RemoteResourceException if there is any problem with the remote flight repository
+     */
+    List<Flight> findByWayAndAirline(String origin, String destination, String airline);
+
+    /**
      * Looks for a flight with the specified ID in the remote flight repository.
      *
      * @param id ID of the flight to get

@@ -8,7 +8,7 @@ VALUES ('name1', 'description1', 'owner1', 'image1'),
 
 INSERT INTO flights(airline_id, from_country, from_airport, from_gate,
                     to_country, to_airport, to_gate, date_time)
-VALUES (1, 'country', 'airport', '1', 'country', 'airport', '1', '2022-10-31T21:51:36.867100600'),
+VALUES (1, 'country', 'airport1', '1', 'country', 'airport2', '1', '2022-10-31T21:51:36.867100600'),
        (2, 'country', 'airport', '1', 'country', 'airport', '1', '2022-10-31T21:51:36.867100600'),
        (3, 'country', 'airport', '1', 'country', 'airport', '1', '2022-10-31T21:51:36.867100600'),
        (4, 'country', 'airport', '1', 'country', 'airport', '1', '2022-10-31T21:51:36.867100600'),

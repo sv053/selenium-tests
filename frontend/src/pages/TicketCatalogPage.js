@@ -3,7 +3,10 @@ import {useLocation } from "react-router-dom"
 import TicketCatalog from "../components/TicketCatalog/TicketCatalog";
 
 const TicketCatalogPage = props => {
-    const id = new URLSearchParams(useLocation().search).get("flight")
+    let id = new URLSearchParams(useLocation().search).get("flight")
+    if (props.flightId) {
+        id = props.flightId
+    }
     return (
         <TicketCatalog {...props} flightId={id}/>
     );
@@ -13,6 +16,7 @@ TicketCatalogPage.propTypes = {
     items: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
     onLoad: PropTypes.func.isRequired,
+    onSearch: PropTypes.func.isRequired,
     onOrderClick: PropTypes.func.isRequired
 };
 

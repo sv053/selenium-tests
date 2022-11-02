@@ -19,6 +19,7 @@ const SignIn = props => {
                         <input type="email"
                                className="form-control mt-1"
                                id="email"
+                               required="true"
                                placeholder="Enter email"/>
                     </div>
                     <div className="form-group mt-3">
@@ -26,6 +27,7 @@ const SignIn = props => {
                         <input type="password"
                                className="form-control mt-1"
                                id="password"
+                               required="true"
                                placeholder="Enter password"/>
                     </div>
                     <div className="d-grid gap-2 mt-3">

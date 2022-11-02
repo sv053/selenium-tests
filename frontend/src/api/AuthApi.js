@@ -20,11 +20,15 @@ const getAuthToken = async (username, password) => {
 }
 
 const handleErrors = response => {
-    if (!response.ok) {
-        throw Error(response.statusText);
+    if (response.ok) {
+        return response
+    } else if (response.status === 400) {
+        throw Error("Invalid email or passport")
+    } else if (response.status === 401) {
+        throw Error("Invalid client credentials")
+    } else {
+        throw Error(response.statusText)
     }
-
-    return response;
 }
 
 export default getAuthToken

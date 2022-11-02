@@ -1,23 +1,26 @@
 @import '../main.css';
 
-.auth-form-container {
+.account-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
+    padding-top: 30px;
+    padding-left: 20px;
 }
 
-.auth-form {
-    width: 420px;
+.account-form {
+    height: 90%;
+    width: 90%;
     box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
     padding-top: 30px;
-    padding-bottom: 20px;
+    padding-bottom: 25px;
+    padding-left: 20px;
     border-radius: 8px;
     background-color: white;
+    margin-bottom: 25px;
 }
 
-.auth-form-content {
+.account-form-content {
     padding-left: 12%;
     padding-right: 12%;
 }

@@ -3,8 +3,8 @@ import '../Account.css'
 
 const InfoSection = props => {
     return (
-        <div className="auth-form">
-            <div className="auth-form-content">
+        <div className="account-form">
+            <div className="account-form-content">
                 <h3 className="card-form-title">Login info</h3>
                 <div className="form-group mt-3">
                     <label>Email:</label>

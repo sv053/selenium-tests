@@ -2,6 +2,8 @@ import {useEffect} from "react";
 import PropTypes from "prop-types";
 import TicketList from "../Ticket/TicketList/TicketList";
 import CatalogItem from "./CatalogItem";
+import SearchBar from "./SearchBar/SearchBar";
+import Container from "react-bootstrap/Container";
 
 const TicketCatalog = props => {
     useEffect(() => {
@@ -21,8 +23,13 @@ const TicketCatalog = props => {
     })
 
     return (
-        <TicketList items={items}
-                    loading={props.loading}/>
+        <Container>
+            <SearchBar flightId={props.flightId}
+                       onShowAll={() => props.onLoad(props.flightId)}
+                       onSearch={props.onSearch}/>
+            <TicketList items={items}
+                        loading={props.loading}/>
+        </Container>
     )
 }
 
@@ -31,6 +38,8 @@ TicketCatalog.propTypes = {
     loading: PropTypes.bool.isRequired,
     flightId: PropTypes.string.isRequired,
     onLoad: PropTypes.func.isRequired,
+
+    onSearch: PropTypes.func.isRequired,
     onOrderClick: PropTypes.func.isRequired
 }
 

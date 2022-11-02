@@ -22,6 +22,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -58,6 +59,40 @@ public class FlightServiceImpl implements FlightService {
         } catch (Exception e) {
             throw new RemoteResourceException("Flight database unavailable", e);
         }
+    }
+
+    @Override
+    public List<Flight> findByAirlineName(String name) {
+        try {
+            Supplier<List<Flight>> findAll = repository::findAll;
+            List<Flight> flights = circuitBreaker.decorateSupplier(findAll).get();
+            return flights.stream()
+                    .filter(flight -> flight.getAirline().getName().equals(name))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RemoteResourceException("Flight database unavailable", e);
+        }
+    }
+
+    @Override
+    public List<Flight> findByOriginAndDestination(String origin, String destination) {
+        Supplier<List<Flight>> findAll = repository::findAll;
+        List<Flight> flights = circuitBreaker.decorateSupplier(findAll).get();
+        return flights.stream()
+                .filter(flight -> flight.getFrom().getAirport().equals(origin))
+                .filter(flight -> flight.getTo().getAirport().equals(origin))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Flight> findByWayAndAirline(String origin, String destination, String airline) {
+        Supplier<List<Flight>> findAll = repository::findAll;
+        List<Flight> flights = circuitBreaker.decorateSupplier(findAll).get();
+        return flights.stream()
+                .filter(flight -> flight.getAirline().getName().equals(airline))
+                .filter(flight -> flight.getFrom().getAirport().equals(origin))
+                .filter(flight -> flight.getTo().getAirport().equals(origin))
+                .collect(Collectors.toList());
     }
 
     @Override

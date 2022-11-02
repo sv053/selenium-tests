@@ -6,6 +6,13 @@ export const getAllTicketsByFlight = async flightId => {
         .then(response => response.json())
 }
 
+export const getAllTicketsByFlightAndPrice = async (flightId, price) => {
+    return await fetch(Config.BASE_URL + "/tickets?flight=" + flightId +
+                                         "&price=" + price)
+        .then(handleErrors)
+        .then(response => response.json())
+}
+
 const handleErrors = response => {
     if (!response.ok) {
         throw Error(response.statusText);

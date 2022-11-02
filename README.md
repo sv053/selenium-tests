@@ -65,7 +65,11 @@ All the endpoints follow the REST API Resource naming conventions.
 
 * HTTP GET http://localhost/flights - get all flights
 * HTTP GET http://localhost/flights/{id} - get the flight with the specified ID
-* HTTP GET http://localhost/flights?airline=... - get all flights with the specified airline ID
+* HTTP GET http://localhost/flights?airlineId=... - get all flights with the specified airline ID
+* HTTP GET http://localhost/flights?airlineName=... - get all flights with the specified airline name
+* HTTP GET http://localhost/flights?origin=...&destination=... - get all flights with the specified origin and destination
+* HTTP GET http://localhost/flights?origin=...&destination=...&airline=... - get all flights with the specified origin, destination
+and airline name
 * HTTP POST http://localhost/flights - create a new flight (autentication required)
 * HTTP PATCH http://localhost/flights/{id} - edit the flight with the specified ID (autentication required)
 * HTTP DELETE http://localhost/flights/{id} - delete the flight with the specified ID (autentication required)
@@ -92,15 +96,16 @@ which allow luggage
 
 #### Flights:
 ![flights](screenshots/flights.png)
+![flights](screenshots/flights-sorted.png)
 
 #### Tickets:
 ![tickets](screenshots/tickets.png)
+![tickets](screenshots/tickets-sorted.png)
 
 #### Cart:
 ![cart](screenshots/cart.png)
 
-#### Account sign in:
+#### Account:
 ![sign-in](screenshots/sign-in.png)
-
-#### Account sign up:
 ![sign-up](screenshots/sign-up.png)
+![account](screenshots/account.png)

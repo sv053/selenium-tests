@@ -2,6 +2,7 @@ import PropTypes from "prop-types"
 import {useEffect} from "react"
 import ClipLoader from "react-spinners/ClipLoader";
 import CatalogItem from "./CatalogItem/CatalogItem";
+import SearchBar from "./SearchBar/SearchBar";
 
 const Catalog = props => {
     useEffect(() => {
@@ -9,7 +10,7 @@ const Catalog = props => {
     }, [])
 
     if ((!props.items || props.items.length === 0) && !props.loading) {
-        return emptyList()
+        return emptyCatalog(props.onLoad, props.onSearch)
     } else {
         const items = props.items.map(item => {
             return {
@@ -21,35 +22,41 @@ const Catalog = props => {
                 dateTime: item.dateTime
             }
         })
-        return list(items, props.loading)
+        return catalog(items, props.loading, props.onLoad, props.onSearch)
     }
 }
 
 Catalog.propTypes = {
     items: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
+    onSearch: PropTypes.func.isRequired,
     onLoad: PropTypes.func.isRequired,
 }
 
-
-const emptyList = () => {
+const emptyCatalog = (onLoad, onSearch) => {
     return (
-        <div className="container-fluid align-content-center">
-            <div className="row">
-                <div className="text-center text">No flights</div>
+        <section className="card-container">
+            <div className="container">
+                <SearchBar onShowAll={onLoad}
+                           onSearch={onSearch}/>
+                <div className="row">
+                    <h2 className="text-center">No flights found</h2>
+                </div>
             </div>
-        </div>
+        </section>
     );
 }
 
-const list = (items, isLoading) => {
+const catalog = (items, isLoading, onLoad, onSearch) => {
     return (
         <div>
             <div className="spinner">
                 <ClipLoader loading={isLoading}/>
             </div>
-            <section className="section-flights">
+            <section className="card-container">
                 <div className="container">
+                    <SearchBar onShowAll={onLoad}
+                               onSearch={onSearch}/>
                     <div className="row">
                         { items.map((item, index) => {
                             return (

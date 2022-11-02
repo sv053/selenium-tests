@@ -8,9 +8,10 @@ const AccountPage = props => {
 }
 
 AccountPage.propTypes = {
-    data: PropTypes.object.isRequired,
+    data: PropTypes.object,
     loading: PropTypes.bool.isRequired,
-    onLoad: PropTypes.func.isRequired
+    onLoad: PropTypes.func.isRequired,
+    onSignOut: PropTypes.func.isRequired
 }
 
 export default AccountPage
