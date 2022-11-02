@@ -62,6 +62,6 @@ public class FlightTest {
                 .build();
 
         int errors = validator.validate(flight).size();
-        assertThat(errors, is(7));
+        assertThat(errors, is(8));
     }
 }
