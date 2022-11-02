@@ -90,8 +90,17 @@ which allow luggage
 #### Kubernetes deployment:
 ![k8s](screenshots/k8s.png)
 
+#### Flights:
+![flights](screenshots/flights.png)
+
+#### Tickets:
+![tickets](screenshots/tickets.png)
+
+#### Cart:
+![cart](screenshots/cart.png)
+
 #### Account sign in:
-![k8s](screenshots/signin.png)
+![sign-in](screenshots/sign-in.png)
 
 #### Account sign up:
-![k8s](screenshots/signup.png)
+![sign-up](screenshots/sign-up.png)
