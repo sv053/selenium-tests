@@ -1,10 +1,10 @@
 import PropTypes from "prop-types"
-import {Button} from "@mui/material"
 import toPrettyDate from "../../../utils";
+import {Button} from "@mui/material";
 
-import './FlightCard.css'
+import './CatalogItem.css'
 
-const FlightCard = props => {
+const CatalogItem = props => {
     const date = toPrettyDate(props.dateTime)
     const image = "data:image/png;base64, " + props.image.replace(/(\r\n|\n|\r)/gm, "")
     return (
@@ -19,11 +19,13 @@ const FlightCard = props => {
                         <h4>{props.airline + ", " + date}</h4>
                     </div>
                     <div className="btn-group group">
-                        <Button variant="outline-info info button" onClick={props.actionLeft}>
-                            {props.buttonLeftText}
+                        <Button variant="outline-info info button"
+                                onClick={() => window.location="#/flights/" + props.id}>
+                            Show details
                         </Button>
-                        <Button variant="primary info button" onClick={props.actionRight}>
-                            {props.buttonRightText}
+                        <Button variant="primary info button"
+                                onClick={() => window.location="#/tickets?flight=" + props.id}>
+                            See tickets
                         </Button>
                     </div>
                 </div>
@@ -32,17 +34,13 @@ const FlightCard = props => {
     );
 }
 
-FlightCard.propTypes = {
+CatalogItem.propTypes = {
     id: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     origin: PropTypes.string.isRequired,
     destination: PropTypes.string.isRequired,
     airline: PropTypes.string.isRequired,
     dateTime: PropTypes.string.isRequired,
-    buttonLeftText: PropTypes.string.isRequired,
-    buttonRightText: PropTypes.string.isRequired,
-    actionRight: PropTypes.func.isRequired,
-    actionLeft: PropTypes.func.isRequired
 };
 
-export default FlightCard
+export default CatalogItem
