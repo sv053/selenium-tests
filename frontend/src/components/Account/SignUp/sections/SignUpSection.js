@@ -10,6 +10,7 @@ const SignUpSection = () => {
                     <input type="email"
                            className="form-control mt-1"
                            id="email"
+                           required="true"
                            placeholder="Enter email"/>
                 </div>
                 <div className="form-group mt-3">
@@ -17,6 +18,7 @@ const SignUpSection = () => {
                     <input type="password"
                            className="form-control mt-1"
                            id="password"
+                           required="true"
                            placeholder="Enter password"/>
                 </div>
                 <div className="form-group mt-3">
@@ -24,6 +26,7 @@ const SignUpSection = () => {
                     <input type="password"
                            className="form-control mt-1"
                            id="repeatPassword"
+                           required="true"
                            placeholder="Repeat password"/>
                 </div>
             </div>
