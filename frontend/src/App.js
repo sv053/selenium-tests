@@ -7,16 +7,29 @@ import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import ErrorPage from "./pages/ErrorPage";
 import Footer from "./components/Footer/Footer";
+import FlightCatalogPage from "./pages/FlightCatalogPage";
 import {getUserByEmail, postUser} from "./api/UserApi";
+import {getAllFlights} from "./api/FlightApi";
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-function App() {
+const App = () => {
+    const [flightCatalog, setFlights] = useState({
+        items: [],
+        loading: false,
+    })
     const [account, setAccount] = useState({
         data: null,
         loading: false
     })
+
+    const loadProducts = () => {
+        setFlights({items: [], loading: true})
+        getAllFlights()
+            .then(data => setFlights({items: data, loading: false}))
+            .catch(e => window.location = "#/error?message=" + e.message)
+    }
 
     const loadAccount = () => {
         if (account.data) {
@@ -46,7 +59,11 @@ function App() {
             <div className="layout">
                 <NavigationBar/>
                 <Routes>
-                    <Route exact path="/" element={<Navigate to="/accounts"/>}/>
+                    <Route exact path="/" element={<Navigate to="/flights"/>}/>
+                    <Route exact path="/flights" element={
+                        <FlightCatalogPage items={flightCatalog.items}
+                                           loading={flightCatalog.loading}
+                                           onLoad={loadProducts}/>}/>
                     <Route exact path="/account" element={
                         <AccountPage data={account.data}
                                      loading={account.loading}
