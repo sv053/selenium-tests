@@ -10,6 +10,7 @@ const FlightCatalogPage = props => {
 FlightCatalogPage.propTypes = {
     items: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
+    onSearch: PropTypes.func.isRequired,
     onLoad: PropTypes.func.isRequired
 };
 

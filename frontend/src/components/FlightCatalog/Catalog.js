@@ -2,6 +2,7 @@ import PropTypes from "prop-types"
 import {useEffect} from "react"
 import ClipLoader from "react-spinners/ClipLoader";
 import CatalogItem from "./CatalogItem/CatalogItem";
+import SearchBar from "./SearchBar/SearchBar";
 
 const Catalog = props => {
     useEffect(() => {
@@ -21,16 +22,16 @@ const Catalog = props => {
                 dateTime: item.dateTime
             }
         })
-        return catalog(items, props.loading)
+        return catalog(items, props.loading, props.onLoad, props.onSearch)
     }
 }
 
 Catalog.propTypes = {
     items: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
+    onSearch: PropTypes.func.isRequired,
     onLoad: PropTypes.func.isRequired,
 }
-
 
 const emptyCatalog = () => {
     return (
@@ -42,7 +43,7 @@ const emptyCatalog = () => {
     );
 }
 
-const catalog = (items, isLoading) => {
+const catalog = (items, isLoading, onLoad, onSearch) => {
     return (
         <div>
             <div className="spinner">
@@ -50,6 +51,8 @@ const catalog = (items, isLoading) => {
             </div>
             <section className="card-container">
                 <div className="container">
+                    <SearchBar onShowAll={onLoad}
+                               onSearch={onSearch}/>
                     <div className="row">
                         { items.map((item, index) => {
                             return (

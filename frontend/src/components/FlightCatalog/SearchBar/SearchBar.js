@@ -1,20 +1,56 @@
+import PropTypes from "prop-types";
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import { Link } from 'react-router-dom'
 
-const SearchBar = () => {
+import './SearchBar.css'
+
+const SearchBar = props => {
+    const searchPressed = (e) => {
+        e.preventDefault()
+        props.onSearch(
+            e.target.elements.origin.value,
+            e.target.elements.destination.value,
+            e.target.elements.airline.value)
+    }
+
     return (
-        <Navbar bg="dark" variant="dark" id="nav-bar">
+        <Navbar className="search-bar">
             <Container>
-                <Link to="/" className="navbar-brand" id="main-link">AirTickets</Link>
                 <Nav className="me-auto">
-                    <Link to="/cart" className="nav-link" id="cart-link">Cart</Link>
-                    <Link to="/account" className="nav-link" id="account-link">Account</Link>
+                    <Link className="nav-link"
+                          onClick={props.onShowAll}>
+                        All
+                    </Link>
+                    <input type="text"
+                           className="form-control nav-item search-bar-input"
+                           id="origin"
+                           required="true"
+                           placeholder="Enter origin"/>
+                    <input type="text"
+                           className="form-control nav-item search-bar-input"
+                           id="destination"
+                           required="true"
+                           placeholder="Enter destination"/>
+                    <input type="text"
+                           className="form-control nav-item search-bar-input"
+                           id="airline"
+                           required="true"
+                           placeholder="Enter airline"/>
+                    <Link className="nav-link"
+                           onClick={event => searchPressed(event)}>
+                        Search
+                    </Link>
                 </Nav>
             </Container>
         </Navbar>
     );
+}
+
+SearchBar.propTypes = {
+    onShowAll: PropTypes.func.isRequired,
+    onSearch: PropTypes.func.isRequired
 }
 
 export default SearchBar
