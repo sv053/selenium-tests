@@ -102,10 +102,16 @@ which allow luggage
 ![tickets](screenshots/tickets.png)
 ![tickets](screenshots/tickets-sorted.png)
 
-#### Cart:
-![cart](screenshots/cart.png)
-
 #### Account:
 ![sign-in](screenshots/sign-in.png)
 ![sign-up](screenshots/sign-up.png)
 ![account](screenshots/account.png)
+
+#### Cart:
+![cart](screenshots/cart.png)
+
+#### Order:
+![order](screenshots/order-details.png)
+![order](screenshots/order-sign-in.png)
+![order](screenshots/order-confirmed.png)
+
