@@ -24,6 +24,7 @@ import {getAllTicketsByFlight, getAllTicketsByFlightAndPrice, getTicketById} fro
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import OrderConfirmedPage from "./pages/OrderConfirmedPage";
 
 const App = () => {
     const [flightCatalog, setFlights] = useState({
@@ -214,6 +215,7 @@ const App = () => {
                         <OrderDetailsPage tickets={cart.items}
                                           accountData={account.data}
                                           onSubmit={orderSubmitted}/>}/>
+                    <Route exact path="/cart/order/confirmed" element={<OrderConfirmedPage/>}/>
                     <Route exact path="/account" element={
                         <AccountPage data={account.data}
                                      loading={account.loading}
