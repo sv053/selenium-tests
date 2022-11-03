@@ -69,7 +69,7 @@ class BookingTest {
     }
 
     @Test
-    void equals_sameIdsDifferentFlights_True() {
+    void equals_DifferentFlights_True() {
         Booking booking1 = new Booking.Builder("user12")
                 .flightId("S7887")
                 .id(15l)
