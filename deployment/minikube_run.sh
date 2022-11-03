@@ -10,6 +10,10 @@ minikube addons enable ingress
 
 echo "Spinning up kubernetes cluster"
 
+# Kafka
+kubectl create -f kafka/zookeper-deployment.yaml
+kubectl create -f kafka/kafka-deployment.yaml
+
 # Ingress
 kubectl create -f ingress-deployment.yaml
 
