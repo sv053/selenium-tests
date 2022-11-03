@@ -11,6 +11,7 @@ import FlightCatalogPage from "./pages/FlightCatalogPage"
 import FlightDetailsPage from "./pages/FlightDetailsPage"
 import TicketCatalogPage from "./pages/TicketCatalogPage"
 import CartPage from "./pages/CartPage"
+import OrderDetailsPage from "./pages/OrderDetailsPage"
 import {getUserByEmail, postUser} from "./api/UserApi"
 import {
     getAllFlights,
@@ -145,6 +146,19 @@ const App = () => {
         setCart({items: items, loading: false})
     }
 
+    const calculateDetailsPrice = () => {
+        if (!cart.items || cart.items.length === 0) {
+            return null
+        }
+        return cart.items
+            .map(item => item.price)
+            .reduce((prev, curr) => prev + curr)
+    }
+
+    const orderSubmitted = () => {
+
+    }
+
     const loadAccount = () => {
         if (account.data) {
             setAccount({data: account.data, loading: false})
@@ -205,6 +219,10 @@ const App = () => {
                                   loading={cart.loading}
                                   onLoad={loadCart}
                                   onRemove={removeFromCart}/>}/>
+                    <Route exact path="/cart/order" element={
+                        <OrderDetailsPage accountData={account.data}
+                                          price={calculateDetailsPrice()}
+                                          onSubmit={orderSubmitted}/>}/>
                     <Route exact path="/account" element={
                         <AccountPage data={account.data}
                                      loading={account.loading}
