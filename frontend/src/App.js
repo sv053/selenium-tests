@@ -146,16 +146,7 @@ const App = () => {
         setCart({items: items, loading: false})
     }
 
-    const calculateDetailsPrice = () => {
-        if (!cart.items || cart.items.length === 0) {
-            return null
-        }
-        return cart.items
-            .map(item => item.price)
-            .reduce((prev, curr) => prev + curr)
-    }
-
-    const orderSubmitted = () => {
+    const orderSubmitted = (email, tickets) => {
 
     }
 
@@ -220,8 +211,8 @@ const App = () => {
                                   onLoad={loadCart}
                                   onRemove={removeFromCart}/>}/>
                     <Route exact path="/cart/order" element={
-                        <OrderDetailsPage accountData={account.data}
-                                          price={calculateDetailsPrice()}
+                        <OrderDetailsPage tickets={cart.items}
+                                          accountData={account.data}
                                           onSubmit={orderSubmitted}/>}/>
                     <Route exact path="/account" element={
                         <AccountPage data={account.data}

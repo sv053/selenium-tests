@@ -8,8 +8,8 @@ const OrderDetailsPage = props => {
 }
 
 OrderDetailsPage.propTypes = {
+    tickets: PropTypes.array.isRequired,
     accountData: PropTypes.object,
-    price: PropTypes.number,
     onSubmit: PropTypes.func.isRequired
 };
 

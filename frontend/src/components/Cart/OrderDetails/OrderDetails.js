@@ -1,25 +1,28 @@
 import PropTypes from "prop-types"
-
 import './OrderDetails.css'
 
 const OrderDetails = props => {
     const submitPressed = (e) => {
         e.preventDefault()
-        props.onSubmit(props.data.email)
+        const ticketIds = props.tickets.map(ticket => ticket.id)
+        props.onSubmit(props.accountData.email, ticketIds)
     }
 
-    if (!props.price) {
+    if (props.tickets.length === 0) {
         return empty()
     } else if (!props.accountData) {
         return signIn()
     } else {
-        return details(props.accountData, props.price, submitPressed)
+        const price = props.tickets
+            .map(item => item.price)
+            .reduce((prev, curr) => prev + curr)
+        return details(props.tickets, price, props.accountData, submitPressed)
     }
 }
 
 OrderDetails.propTypes = {
+    tickets: PropTypes.array.isRequired,
     accountData: PropTypes.object,
-    price: PropTypes.number,
     onSubmit: PropTypes.func.isRequired
 }
 
@@ -49,12 +52,19 @@ const signIn = () => {
     );
 }
 
-const details = (data, price, submitPressed) => {
+const details = (tickets, price, data, submitPressed) => {
     return (
-        <div className="order-container">
-            <form className="order-form" onSubmit={event => submitPressed(event)}>
+        <form className="order-container row m-lg-3" onSubmit={event => submitPressed(event)}>
+            <div className="order-form">
                 <div className="order-form-content">
                     <h3 className="card-form-title">Order details</h3>
+                    <div className="form-group mt-3">
+                        <label>Tickets selected: {tickets.length}</label>
+                    </div>
+                </div>
+            </div>
+            <div className="order-form">
+                <div className="order-form-content">
                     <div className="form-group mt-3">
                         <label>Email:</label>
                         <div className="form-text">{data.email}</div>
@@ -67,15 +77,14 @@ const details = (data, price, submitPressed) => {
                         <label>Passport number:</label>
                         <div className="form-text">{data.passportNumber}</div>
                     </div>
-
                     <div className="d-grid gap-2 mt-3">
                         <button type="submit" className="btn btn-primary">
                             { "Submit $" + price + " order" }
                         </button>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     )
 }
 
