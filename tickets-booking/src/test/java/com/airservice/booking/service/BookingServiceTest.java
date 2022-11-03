@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional
@@ -21,31 +22,28 @@ class BookingServiceTest {
     BookingService bookingService;
     @BeforeEach
     void init() {
-        booking = new Booking.Builder("user542")
-                .flightId("EK128")
-                .id(15l)
+        booking = bookingService.createBooking(new Booking.Builder("user542")
+                .ticketId("EK128")
                 .bookingDateTime(LocalDateTime.MIN)
-                .build();
+                .build());
     }
 
     @Test
     void findById_Success_BookingIsFound() {
         Booking foundBooking = bookingService.findBookingById(booking.getId());
-
         assertEquals(booking, foundBooking);
     }
 
     @Test
     void findAllBookings_Success_BookingsAreFound() {
         List<Booking> foundBooking = bookingService.findAllBookings();
-
-        assertEquals(booking, foundBooking);
+        assertTrue(foundBooking.contains(booking));
     }
 
     @Test
     void updateBooking_Success_BookingIsUpdated() {
         Booking updatedBooking = new Booking.Builder("user635")
-                .flightId("EK128")
+                .ticketId("EK128")
                 .id(15l)
                 .bookingDateTime(LocalDateTime.MIN)
                 .build();
@@ -57,26 +55,19 @@ class BookingServiceTest {
     @Test
     void createBooking_Success_BookingIsCreated() {
         Booking bookingToCreate = new Booking.Builder("user888")
-                .flightId("SU128")
-                .id(17l)
+                .ticketId("SU128")
                 .bookingDateTime(LocalDateTime.MIN)
                 .build();
-        Booking foundBooking = bookingService.createBooking(booking);
-        Booking persistentBooking = bookingService.findBookingById(bookingToCreate.getId());
-        assertEquals(bookingToCreate, persistentBooking);
+        Booking bookingCreated = bookingService.createBooking(booking);
+        assertTrue(bookingService.findAllBookings().contains(bookingCreated));
     }
 
     @Test
     void removeBooking_Success_BookingIsRemoved() {
-        Booking booking = new Booking.Builder("user777")
-                .flightId("QH128")
-                .id(17l)
-                .bookingDateTime(LocalDateTime.MIN)
-                .build();
-        bookingService.createBooking(booking);
-        Booking foundBooking = bookingService.findBookingById(booking.getId());
-        bookingService.removeBooking(booking.getId());
-        assertEquals(null, bookingService.findBookingById(booking.getId()));
+        List<Booking> bookings = bookingService.findAllBookings();
+        Booking booking = bookingService.findBookingById(bookings.stream().findFirst().get().getId());
+        Booking bookingToCompare = bookingService.findBookingById(booking.getId());
+        assertEquals(booking, bookingToCompare);
     }
 }
 

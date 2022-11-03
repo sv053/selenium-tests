@@ -11,21 +11,21 @@ import java.util.Objects;
 public class Booking {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name="user_id", nullable = false)
     @NotBlank()
     private String userId;
-    @Column(name="flight_id", nullable = false)
+    @Column(name="ticket_id", nullable = false)
     @NotBlank()
-    private String flightId;
+    private String ticketId;
     @Column(name="booking_datetime", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private LocalDateTime dateTime;
 
     private Booking(Builder builder) {
         this.userId = builder.userId;
-        this.flightId = builder.flightId;
+        this.ticketId = builder.ticketId;
         this.dateTime = builder.dateTime;
     }
 
@@ -37,8 +37,8 @@ public class Booking {
         return userId;
     }
 
-    public String getFlightId() {
-        return flightId;
+    public String getTicketId() {
+        return ticketId;
     }
 
     public LocalDateTime getDateTime() {
@@ -58,12 +58,14 @@ public class Booking {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return Objects.equals(id, booking.id) && Objects.equals(userId, booking.userId) && Objects.equals(dateTime, booking.dateTime);
+        return Objects.equals(id, booking.id) && Objects.equals(userId, booking.userId)
+                && Objects.equals(ticketId, booking.ticketId)
+                && Objects.equals(dateTime, booking.dateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, flightId, dateTime);
+        return Objects.hash(id, userId, ticketId, dateTime);
     }
 
     @Override
@@ -71,7 +73,7 @@ public class Booking {
         return "UserOrder{" +
                 "id=" + id +
                 ", userId='" + userId + '\'' +
-                ", flightId=" + flightId +
+                ", flightId=" + ticketId +
                 ", dateTime=" + dateTime +
                 '}';
     }
@@ -79,7 +81,7 @@ public class Booking {
     public static class Builder {
         private Long id;
         private String userId;
-        private String flightId;
+        private String ticketId;
         private LocalDateTime dateTime;
 
         public Builder(String userId) {
@@ -91,8 +93,8 @@ public class Booking {
             return this;
         }
 
-        public Builder flightId(String flightId) {
-            this.flightId = flightId;
+        public Builder ticketId(String flightId) {
+            this.ticketId = flightId;
             return this;
         }
 
