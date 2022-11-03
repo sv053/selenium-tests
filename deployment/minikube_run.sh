@@ -10,6 +10,10 @@ minikube addons enable ingress
 
 echo "Spinning up kubernetes cluster"
 
+# Kafka
+kubectl create -f kafka/zookeper-deployment.yaml
+kubectl create -f kafka/kafka-deployment.yaml
+
 # Ingress
 kubectl create -f ingress-deployment.yaml
 
@@ -33,6 +37,10 @@ kubectl create -f airline-service/airline-service-deployment.yaml
 # Booking service
 kubectl create -f booking-service/booking-service-secret.yaml
 kubectl create -f booking-service/booking-service-deployment.yaml
+
+# Statistics service
+kubectl create -f statistics-service/statistics-service-secret.yaml
+kubectl create -f statistics-service/statistics-service-deployment.yaml
 
 # Frontend
 kubectl create -f frontend-deployment.yaml

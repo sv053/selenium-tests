@@ -86,6 +86,13 @@ which allow luggage
 * HTTP POST http://localhost/tickets - create a new ticket (autentication required)
 * HTTP DELETE http://localhost/tickets/{id} - delete the ticket with the specified ID (autentication required)
 
+### Bookings:
+
+* HTTP GET http://localhost/booking - get all bookings (autentication required)
+* HTTP GET http://localhost/booking/{id} - get a booking with the specified ID (autentication required)
+* HTTP POST http://localhost/booking - create a new booking (autentication required)
+* HTTP DELETE http://localhost/booking/{id} - delete a booking with the specified ID (autentication required)
+
 ## Screenshots
 
 #### Jenkins build:
