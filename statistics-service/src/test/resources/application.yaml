@@ -8,6 +8,7 @@ h2:
       platform: h2
 kafka:
   bootstrapAddress: test
+  topic: test
 spring:
   jpa:
     show-sql: true
