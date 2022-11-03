@@ -1,5 +1,7 @@
 package air.statisticsservice.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,7 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "statistics")
+@Table(name = "order_statistics")
 public class OrderStatistics {
 
     @Id
@@ -19,6 +21,10 @@ public class OrderStatistics {
 
     @Column(name = "average_per_day")
     private Long averagePerDay;
+
+    @Column(name = "average_per_day")
+    @JsonIgnore
+    private Long orders;
 
     public Long getId() {
         return id;
@@ -36,6 +42,14 @@ public class OrderStatistics {
         this.averagePerDay = averagePerDay;
     }
 
+    public Long getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Long orders) {
+        this.orders = orders;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) {
@@ -47,12 +61,13 @@ public class OrderStatistics {
         }
 
         OrderStatistics that = (OrderStatistics) other;
-        return Objects.equals(averagePerDay, that.averagePerDay);
+        return Objects.equals(averagePerDay, that.averagePerDay)
+                && Objects.equals(orders, that.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(averagePerDay);
+        return Objects.hash(averagePerDay, orders);
     }
 
     @Override
@@ -60,6 +75,7 @@ public class OrderStatistics {
         return "OrderStatistics{" +
                 "id=" + id +
                 ", averagePerDay=" + averagePerDay +
+                ", orders=" + orders +
                 '}';
     }
 }

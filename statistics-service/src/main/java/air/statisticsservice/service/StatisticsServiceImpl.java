@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,6 +31,26 @@ public class StatisticsServiceImpl implements StatisticsService {
                                  CircuitBreaker circuitBreaker) {
         this.repository = repository;
         this.circuitBreaker = circuitBreaker;
+    }
+
+    @KafkaListener(topics = "order-statistics")
+    public void consume(String message) {
+        logger.info(message);
+        try {
+            Optional<OrderStatistics> statistics = get();
+            statistics.ifPresentOrElse(order -> {
+                long orders = order.getOrders();
+                order.setOrders(++orders);
+                repository.save(order);
+            }, () -> {
+                OrderStatistics newStatistics = new OrderStatistics();
+                newStatistics.setOrders(1L);
+                repository.save(newStatistics);
+            });
+
+        } catch (Exception e) {
+            throw new RemoteResourceException("Statistics database unavailable", e);
+        }
     }
 
     @Override

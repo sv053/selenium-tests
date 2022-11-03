@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.Mockito;
-import org.springframework.kafka.core.KafkaTemplate;
 
 import java.util.List;
 
@@ -26,14 +25,12 @@ import static org.mockito.Mockito.when;
 public class StatisticsServiceImplTest {
     private static OrderStatisticsRepository repository;
     private static CircuitBreaker circuitBreaker;
-    private static KafkaTemplate<String, String> kafkaTemplate;
 
     private StatisticsServiceImpl statisticsService;
 
     @BeforeAll
     public static void setUpMocks() {
         repository = mock(OrderStatisticsRepository.class);
-        kafkaTemplate = mock(KafkaTemplate.class);
 
         circuitBreaker = mock(CircuitBreaker.class);
         when(circuitBreaker.decorateSupplier(any())).then(returnsFirstArg());
@@ -43,7 +40,7 @@ public class StatisticsServiceImplTest {
     @BeforeEach
     public void beforeEach() {
         Mockito.reset(repository);
-        statisticsService = new StatisticsServiceImpl(repository, circuitBreaker, kafkaTemplate);
+        statisticsService = new StatisticsServiceImpl(repository, circuitBreaker);
     }
 
     @Test
