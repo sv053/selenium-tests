@@ -18,6 +18,7 @@
         <module>user-service</module>
         <module>airline-service</module>
         <module>auth-service</module>
+        <module>tickets-booking</module>
     </modules>
 
     <properties>
