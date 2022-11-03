@@ -69,7 +69,7 @@ class BookingControllerTest {
 
     @Test
     @WithAnonymousUser
-    void shouldDenyReturnAllFoundBookings() throws Exception {
+    void shouldDenyReturnAllFoundBookings_failure() throws Exception {
         mockMvc.perform(get("/booking"))
                 .andDo(print())
                 .andExpect(status().isUnauthorized());
@@ -77,7 +77,7 @@ class BookingControllerTest {
 
     @Test
     @WithAnonymousUser
-    void shouldDenyReturnBookingFoundById() throws Exception {
+    void shouldDenyReturnBookingFoundById_failure() throws Exception {
         Booking booking = bookingService.createBooking(new Booking.Builder("user635")
                 .ticketId("EK128")
                 .bookingDateTime(LocalDateTime.MIN)
@@ -103,18 +103,10 @@ class BookingControllerTest {
 
     @Test
     @WithAnonymousUser
-    void shouldDenyDeleteBooking() throws Exception {
+    void shouldDenyDeleteBooking_failure() throws Exception {
         mockMvc.perform(delete("/booking/6"))
                 .andDo(print())
                 .andExpect(status().isUnauthorized());
-    }
-
-    @Test
-    @WithMockUser(authorities = "USER", username = "user3")
-    void shouldDeleteBookingOwnerUser_success() throws Exception {
-        mockMvc.perform(delete("/booking/3"))
-                .andDo(print())
-                .andExpect(status().isOk());
     }
 
     @Test
