@@ -5,7 +5,7 @@ const OrderDetails = props => {
     const submitPressed = (e) => {
         e.preventDefault()
         const ticketIds = props.tickets.map(ticket => ticket.id)
-        props.onSubmit(props.accountData.email, ticketIds)
+        props.onSubmit(props.accountData.email, props.accountData.password, ticketIds)
     }
 
     if (props.tickets.length === 0) {
