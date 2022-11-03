@@ -53,8 +53,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .mvcMatchers("/**")
                 .and()
                 .authorizeRequests()
-                .mvcMatchers("/booking", "/booking/**")
-                .permitAll()
                 .mvcMatchers("/booking/**")
                 .authenticated()
                 .and()

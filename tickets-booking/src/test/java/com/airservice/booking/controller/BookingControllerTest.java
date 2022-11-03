@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
@@ -45,6 +47,7 @@ class BookingControllerTest {
        }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void shouldReturnCreatedNewBooking() throws Exception {
         mockMvc.perform(post("/booking")
                         .content(newBookingJson)
@@ -55,6 +58,7 @@ class BookingControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void shouldReturnAllFoundBookings() throws Exception {
         mockMvc.perform(post("/booking")
                 .content(newBookingJson));
@@ -62,6 +66,14 @@ class BookingControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithAnonymousUser
+    void shouldDenyReturnAllFoundBookings() throws Exception {
+        mockMvc.perform(get("/booking"))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -77,8 +89,17 @@ class BookingControllerTest {
     }
 
     @Test
-    void deleteBooking() throws Exception {
+    @WithAnonymousUser
+    void shouldDenyDeleteBooking() throws Exception {
         mockMvc.perform(delete("/booking/6"))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser(authorities = "USER", username = "5")
+    void shouldDeleteBooking() throws Exception {
+        mockMvc.perform(delete("/booking/5"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
