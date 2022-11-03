@@ -11,6 +11,8 @@ import FlightCatalogPage from "./pages/FlightCatalogPage"
 import FlightDetailsPage from "./pages/FlightDetailsPage"
 import TicketCatalogPage from "./pages/TicketCatalogPage"
 import CartPage from "./pages/CartPage"
+import OrderDetailsPage from "./pages/OrderDetailsPage"
+import OrderConfirmedPage from "./pages/OrderConfirmedPage"
 import {getUserByEmail, postUser} from "./api/UserApi"
 import {
     getAllFlights,
@@ -23,6 +25,7 @@ import {getAllTicketsByFlight, getAllTicketsByFlightAndPrice, getTicketById} fro
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import {postBooking} from "./api/BookingApi";
 
 const App = () => {
     const [flightCatalog, setFlights] = useState({
@@ -135,14 +138,19 @@ const App = () => {
         setCart({items: items, loading: false})
     }
 
-    const loadCart = () => {
-        console.log("Cart opened")
-    }
-
     const removeFromCart = numberInCart => {
         console.log("Remove " + numberInCart)
         let items = cart.items.filter(item => item.numberInCart !== numberInCart)
         setCart({items: items, loading: false})
+    }
+
+    const orderSubmitted = (email, password, tickets) => {
+        postBooking({email: email, password: password, tickets: tickets})
+            .then(e => window.location = "#/cart/order/confirmed")
+            .catch(e => {
+                setAccount({data: null, loading: false})
+                window.location = "#/error?message=" + e.message
+            })
     }
 
     const loadAccount = () => {
@@ -203,8 +211,12 @@ const App = () => {
                     <Route exact path="/cart" element={
                         <CartPage items={cart.items}
                                   loading={cart.loading}
-                                  onLoad={loadCart}
                                   onRemove={removeFromCart}/>}/>
+                    <Route exact path="/cart/order" element={
+                        <OrderDetailsPage tickets={cart.items}
+                                          accountData={account.data}
+                                          onSubmit={orderSubmitted}/>}/>
+                    <Route exact path="/cart/order/confirmed" element={<OrderConfirmedPage/>}/>
                     <Route exact path="/account" element={
                         <AccountPage data={account.data}
                                      loading={account.loading}
