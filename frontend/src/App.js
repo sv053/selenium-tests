@@ -12,6 +12,7 @@ import FlightDetailsPage from "./pages/FlightDetailsPage"
 import TicketCatalogPage from "./pages/TicketCatalogPage"
 import CartPage from "./pages/CartPage"
 import OrderDetailsPage from "./pages/OrderDetailsPage"
+import OrderConfirmedPage from "./pages/OrderConfirmedPage"
 import {getUserByEmail, postUser} from "./api/UserApi"
 import {
     getAllFlights,
@@ -24,7 +25,7 @@ import {getAllTicketsByFlight, getAllTicketsByFlightAndPrice, getTicketById} fro
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import OrderConfirmedPage from "./pages/OrderConfirmedPage";
+import {postBooking} from "./api/BookingApi";
 
 const App = () => {
     const [flightCatalog, setFlights] = useState({
@@ -143,8 +144,13 @@ const App = () => {
         setCart({items: items, loading: false})
     }
 
-    const orderSubmitted = (email, tickets) => {
-
+    const orderSubmitted = (email, password, tickets) => {
+        postBooking({email: email, password: password, tickets: tickets})
+            .then(e => window.location = "#/cart/order/confirmed")
+            .catch(e => {
+                setAccount({data: null, loading: false})
+                window.location = "#/error?message=" + e.message
+            })
     }
 
     const loadAccount = () => {
