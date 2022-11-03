@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booking-service
+  labels:
+    app: booking-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: booking-service
+      tier: microservice
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: booking-service
+        tier: microservice
+    spec:
+      containers:
+      - name: booking-service
+        image: airtickets/booking-service:1.0
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /actuator/health/liveness
+          initialDelaySeconds: 100
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            port: 8080
+            path: /actuator/health/readiness
+          initialDelaySeconds: 15
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod
+        - name: SERVER_PORT
+          value: "8080"
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            secretKeyRef:
+              name: booking-service-secret
+              key: db-url
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: booking-service-secret
+              key: db-username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: booking-service-secret
+              key: db-password
+        - name: SPRING_SECURITY_OAUTH2_JWT-KEY
+          valueFrom:
+            secretKeyRef:
+              name: booking-service-secret
+              key: jwt-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking-service
+  labels:
+    app: booking-service
+    tier: microservice
+spec:
+  type: NodePort
+  ports:
+    - protocol: "TCP"
+      port: 2020
+      targetPort: 8080
+  selector:
+    app: booking-service
+    tier: microservice
