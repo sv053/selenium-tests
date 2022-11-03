@@ -61,5 +61,12 @@ spec:
               service:
                 name: booking-service
                 port:
-                  number: 2020                                 
+                  number: 2020   
+          - pathType: Prefix
+            path: "/statistics"
+            backend:
+              service:
+                name: statistics-service
+                port:
+                  number: 1515                                           
                   
