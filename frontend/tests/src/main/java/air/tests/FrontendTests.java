@@ -2,6 +2,7 @@ package air.tests;
 
 import air.tests.config.WebDriverFactory;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,11 @@ public class FrontendTests {
     public static void init() {
         driver = WebDriverFactory.getDriver();
         driver.get("http://localhost:3000/");
+    }
+
+    @AfterAll
+    public static void shutDown() {
+        driver.quit();
     }
 
     @Test
