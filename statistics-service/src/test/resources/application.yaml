@@ -1,5 +1,5 @@
 server:
-  port: 5973
+  port: 0
 h2:
   console:
     enabled: true
@@ -7,14 +7,14 @@ h2:
     init:
       platform: h2
 kafka:
-  bootstrapAddress: dev
-  topic: dev
+  bootstrapAddress: test
+  topic: test
 spring:
   jpa:
     show-sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     defer-datasource-initialization: true
   datasource:
     url: jdbc:h2:mem:testdb;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
@@ -23,15 +23,10 @@ spring:
     driverClassName: org.h2.Driver
   security:
     oauth2:
-      jwt-key: debug-key
+      jwt-key: test-key
       client:
-        client-id: debug-client
-        client-secret: debug-password
+        client-id: test-client
+        client-secret: test-password
         authorization-grant-type: client_credentials
         scope: read
-        access-token-uri: http://localhost:49937/oauth/token
-management:
-  endpoint:
-    health:
-      probes:
-        enabled: true
+        access-token-uri: http://localhost:9000/oauth/token
