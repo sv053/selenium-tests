@@ -33,7 +33,7 @@ public class BookingController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('USER') and #booking.id == authentication.name or hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('USER') and #booking.userId == authentication.name or hasAuthority('ADMIN')")
     public Booking createBooking(@RequestBody Booking booking) {
         return bookingService.createBooking(booking);
     }

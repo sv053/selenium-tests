@@ -22,13 +22,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Tag("category.IntegrationTest")
 @SpringBootTest
 @AutoConfigureMockMvc
 class BookingControllerTest {
 
     private static String newBookingJson;
     private static String minDateTime;
-    private static String maxDateTime;
     @Autowired
     private MockMvc mockMvc;
 
@@ -38,7 +38,6 @@ class BookingControllerTest {
     @BeforeAll
     private static void init() {
         minDateTime = "2015-08-02T00:29:53.949";
-        maxDateTime = LocalDateTime.MAX.toString();
         newBookingJson = "{" +
                 "\"userId\": \"123456789\"," +
                 "\"ticketId\": \"EK122\", " +
@@ -48,7 +47,7 @@ class BookingControllerTest {
 
     @Test
     @WithMockUser(authorities = "ADMIN")
-    void shouldReturnCreatedNewBooking() throws Exception {
+    void shouldReturnCreatedNewBooking_success() throws Exception {
         mockMvc.perform(post("/booking")
                         .content(newBookingJson)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -59,7 +58,7 @@ class BookingControllerTest {
 
     @Test
     @WithMockUser(authorities = "ADMIN")
-    void shouldReturnAllFoundBookings() throws Exception {
+    void shouldReturnAllFoundBookings_success() throws Exception {
         mockMvc.perform(post("/booking")
                 .content(newBookingJson));
         mockMvc.perform(get("/booking"))
@@ -77,7 +76,21 @@ class BookingControllerTest {
     }
 
     @Test
-    void shouldReturnBookingFoundById() throws Exception {
+    @WithAnonymousUser
+    void shouldDenyReturnBookingFoundById() throws Exception {
+        Booking booking = bookingService.createBooking(new Booking.Builder("user635")
+                .ticketId("EK128")
+                .bookingDateTime(LocalDateTime.MIN)
+                .build());
+        mockMvc.perform(get("/booking/"+booking.getId()))
+                .andDo(print())
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    void shouldReturnBookingFoundById_success() throws Exception {
         Booking booking = bookingService.createBooking(new Booking.Builder("user635")
                 .ticketId("EK128")
                 .bookingDateTime(LocalDateTime.MIN)
@@ -97,9 +110,17 @@ class BookingControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = "USER", username = "5")
-    void shouldDeleteBooking() throws Exception {
-        mockMvc.perform(delete("/booking/5"))
+    @WithMockUser(authorities = "USER", username = "user3")
+    void shouldDeleteBookingOwnerUser_success() throws Exception {
+        mockMvc.perform(delete("/booking/3"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    void shouldDeleteBookingRoleAdmin_success() throws Exception {
+        mockMvc.perform(delete("/booking/4"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
