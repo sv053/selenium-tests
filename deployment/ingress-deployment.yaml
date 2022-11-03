@@ -54,5 +54,12 @@ spec:
               service:
                 name: airline-service
                 port:
-                  number: 5050                         
+                  number: 5050   
+          - pathType: Prefix
+            path: "/booking"
+            backend:
+              service:
+                name: booking-service
+                port:
+                  number: 2020                                 
                   
