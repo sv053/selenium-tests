@@ -23,7 +23,7 @@ class BookingServiceTest {
     @BeforeEach
     void init() {
         booking = bookingService.createBooking(new Booking.Builder("user542")
-                .flightId("EK128")
+                .ticketId("EK128")
                 .bookingDateTime(LocalDateTime.MIN)
                 .build());
     }
@@ -43,7 +43,7 @@ class BookingServiceTest {
     @Test
     void updateBooking_Success_BookingIsUpdated() {
         Booking updatedBooking = new Booking.Builder("user635")
-                .flightId("EK128")
+                .ticketId("EK128")
                 .id(15l)
                 .bookingDateTime(LocalDateTime.MIN)
                 .build();
@@ -55,7 +55,7 @@ class BookingServiceTest {
     @Test
     void createBooking_Success_BookingIsCreated() {
         Booking bookingToCreate = new Booking.Builder("user888")
-                .flightId("SU128")
+                .ticketId("SU128")
                 .bookingDateTime(LocalDateTime.MIN)
                 .build();
         Booking bookingCreated = bookingService.createBooking(booking);

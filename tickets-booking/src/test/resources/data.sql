@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-INSERT INTO booking(user_id, flight_id, booking_datetime)
+INSERT INTO booking(user_id, ticket_id, booking_datetime)
 VALUES ('user1', 'flight1', '2015-08-02T00:29:53.949'),
        ('user2', 'flight2', '2015-08-02T00:29:53.949'),
        ('user3', 'flight3', '2015-08-02T00:29:53.949'),

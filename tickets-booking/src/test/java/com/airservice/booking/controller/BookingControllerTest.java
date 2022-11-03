@@ -39,7 +39,7 @@ class BookingControllerTest {
         maxDateTime = LocalDateTime.MAX.toString();
         newBookingJson = "{" +
                 "\"userId\": \"123456789\"," +
-                "\"flightId\": \"EK122\", " +
+                "\"ticketId\": \"EK122\", " +
                 "\"dateTime\": \"" +
                 minDateTime + "\" }";
        }
@@ -67,7 +67,7 @@ class BookingControllerTest {
     @Test
     void shouldReturnBookingFoundById() throws Exception {
         Booking booking = bookingService.createBooking(new Booking.Builder("user635")
-                .flightId("EK128")
+                .ticketId("EK128")
                 .bookingDateTime(LocalDateTime.MIN)
                 .build());
         mockMvc.perform(get("/booking/"+booking.getId()))
