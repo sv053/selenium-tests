@@ -11,6 +11,7 @@ import FlightCatalogPage from "./pages/FlightCatalogPage"
 import FlightDetailsPage from "./pages/FlightDetailsPage"
 import TicketCatalogPage from "./pages/TicketCatalogPage"
 import CartPage from "./pages/CartPage"
+import OrderDetailsPage from "./pages/OrderDetailsPage"
 import {getUserByEmail, postUser} from "./api/UserApi"
 import {
     getAllFlights,
@@ -23,6 +24,7 @@ import {getAllTicketsByFlight, getAllTicketsByFlightAndPrice, getTicketById} fro
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import OrderConfirmedPage from "./pages/OrderConfirmedPage";
 
 const App = () => {
     const [flightCatalog, setFlights] = useState({
@@ -145,6 +147,10 @@ const App = () => {
         setCart({items: items, loading: false})
     }
 
+    const orderSubmitted = (email, tickets) => {
+
+    }
+
     const loadAccount = () => {
         if (account.data) {
             setAccount({data: account.data, loading: false})
@@ -205,6 +211,11 @@ const App = () => {
                                   loading={cart.loading}
                                   onLoad={loadCart}
                                   onRemove={removeFromCart}/>}/>
+                    <Route exact path="/cart/order" element={
+                        <OrderDetailsPage tickets={cart.items}
+                                          accountData={account.data}
+                                          onSubmit={orderSubmitted}/>}/>
+                    <Route exact path="/cart/order/confirmed" element={<OrderConfirmedPage/>}/>
                     <Route exact path="/account" element={
                         <AccountPage data={account.data}
                                      loading={account.loading}
