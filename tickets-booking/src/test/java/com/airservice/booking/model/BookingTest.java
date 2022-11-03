@@ -1,11 +1,13 @@
 package com.airservice.booking.model;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Tag("category.UnitTest")
 class BookingTest {
 
     @Test

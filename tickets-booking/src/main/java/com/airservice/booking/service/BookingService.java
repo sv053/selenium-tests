@@ -6,6 +6,7 @@ import com.airservice.booking.repository.BookingRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookingService {
@@ -30,6 +31,10 @@ public class BookingService {
 
    public Booking findBookingById(Long id) {
       return bookingRepository.findById(id).orElseThrow(()-> new EntityNotFoundException(id.toString()));
+   }
+
+   public Optional<Booking> findById(Long id) {
+      return bookingRepository.findById(id);
    }
 
    public Booking createBooking(Booking booking) {
