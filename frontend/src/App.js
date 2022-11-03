@@ -137,10 +137,6 @@ const App = () => {
         setCart({items: items, loading: false})
     }
 
-    const loadCart = () => {
-        console.log("Cart opened")
-    }
-
     const removeFromCart = numberInCart => {
         console.log("Remove " + numberInCart)
         let items = cart.items.filter(item => item.numberInCart !== numberInCart)
@@ -209,7 +205,6 @@ const App = () => {
                     <Route exact path="/cart" element={
                         <CartPage items={cart.items}
                                   loading={cart.loading}
-                                  onLoad={loadCart}
                                   onRemove={removeFromCart}/>}/>
                     <Route exact path="/cart/order" element={
                         <OrderDetailsPage tickets={cart.items}

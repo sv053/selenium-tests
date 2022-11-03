@@ -1,14 +1,9 @@
-import {useEffect} from "react"
 import PropTypes from "prop-types"
 import TicketList from "../Ticket/TicketList/TicketList"
 import CartItem from "./CartItem"
 import Footer from "./Footer/Footer"
 
 const Cart = props => {
-    useEffect(() => {
-        props.onLoad(props.flightId)
-    }, [])
-
     const tickets = props.items.map(item => {
         return <CartItem numberInCart={item.numberInCart}
                          id={item.id}
@@ -35,7 +30,6 @@ const Cart = props => {
 Cart.propTypes = {
     items: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
-    onLoad: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired
 }
 

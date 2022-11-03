@@ -10,7 +10,6 @@ const CartPage = props => {
 CartPage.propTypes = {
     items: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
-    onLoad: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired
 };
 
