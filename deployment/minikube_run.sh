@@ -30,6 +30,10 @@ kubectl create -f auth-service/auth-service-deployment.yaml
 kubectl create -f airline-service/airline-service-secret.yaml
 kubectl create -f airline-service/airline-service-deployment.yaml
 
+# Booking service
+kubectl create -f booking-service/booking-service-secret.yaml
+kubectl create -f booking-service/booking-service-deployment.yaml
+
 # Frontend
 kubectl create -f frontend-deployment.yaml
 
