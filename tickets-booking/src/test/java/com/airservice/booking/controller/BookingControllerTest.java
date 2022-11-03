@@ -1,5 +1,6 @@
 package com.airservice.booking.controller;
 
+import com.airservice.booking.model.Booking;
 import com.airservice.booking.service.BookingService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
@@ -24,7 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class BookingControllerTest {
 
     private static String newBookingJson;
-    private static String newBookingJsonToCheckDelete;
     private static String minDateTime;
     private static String maxDateTime;
     @Autowired
@@ -35,26 +35,20 @@ class BookingControllerTest {
 
     @BeforeAll
     private static void init() {
-        minDateTime = LocalDateTime.MIN.toString();
+        minDateTime = "2015-08-02T00:29:53.949";
         maxDateTime = LocalDateTime.MAX.toString();
         newBookingJson = "{" +
-                "\"id\": \"18976\"," +
                 "\"userId\": \"123456789\"," +
-                "\"flightId\": \"EK122\"" +
-                "\"booking_datetime\": \"" +
+                "\"ticketId\": \"EK122\", " +
+                "\"dateTime\": \"" +
                 minDateTime + "\" }";
-        newBookingJsonToCheckDelete = "{" +
-                "\"id\": \"9462\"," +
-                "\"userId\": \"123456789\"," +
-                "\"flightId\": \"EK122\"" +
-                "\"booking_datetime\": \"" +
-                maxDateTime + "\" }";
-    }
+       }
 
     @Test
     void shouldReturnCreatedNewBooking() throws Exception {
-        mockMvc.perform(post("/")
-                        .content(newBookingJson))
+        mockMvc.perform(post("/booking")
+                        .content(newBookingJson)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -62,9 +56,9 @@ class BookingControllerTest {
 
     @Test
     void shouldReturnAllFoundBookings() throws Exception {
-        mockMvc.perform(post("/")
+        mockMvc.perform(post("/booking")
                 .content(newBookingJson));
-        mockMvc.perform(get("/"))
+        mockMvc.perform(get("/booking"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -72,29 +66,19 @@ class BookingControllerTest {
 
     @Test
     void shouldReturnBookingFoundById() throws Exception {
-        mockMvc.perform(get("/user1"))
+        Booking booking = bookingService.createBooking(new Booking.Builder("user635")
+                .ticketId("EK128")
+                .bookingDateTime(LocalDateTime.MIN)
+                .build());
+        mockMvc.perform(get("/booking/"+booking.getId()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    void postAndExpect(String data, ResultMatcher status) throws Exception {
-        mockMvc.perform(post("/booking")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(data)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status)
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
-
-    @Test
     void deleteBooking() throws Exception {
-        mockMvc.perform((post("/")
-                        .content(newBookingJsonToCheckDelete)))
-                .andDo(print()).andExpect(status().isOk());
-        mockMvc.perform(delete("/booking").param("booking", newBookingJsonToCheckDelete))
+        mockMvc.perform(delete("/booking/6"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
