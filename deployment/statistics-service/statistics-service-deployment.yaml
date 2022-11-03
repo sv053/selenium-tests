@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statistics-service
+  labels:
+    app: statistics-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: statistics-service
+      tier: microservice
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: statistics-service
+        tier: microservice
+    spec:
+      containers:
+      - name: statistics-service
+        image: airtickets/statistics-service:1.0
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /actuator/health/liveness
+          initialDelaySeconds: 100
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            port: 8080
+            path: /actuator/health/readiness
+          initialDelaySeconds: 15
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod
+        - name: SERVER_PORT
+          value: "8080"
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            secretKeyRef:
+              name: statistics-service-secret
+              key: db-url
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: statistics-service-secret
+              key: db-username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: statistics-service-secret
+              key: db-password
+        - name: SPRING_SECURITY_OAUTH2_JWT-KEY
+          valueFrom:
+            secretKeyRef:
+              name: statistics-service-secret
+              key: jwt-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: statistics-service
+  labels:
+    app: statistics-service
+    tier: microservice
+spec:
+  type: NodePort
+  ports:
+    - protocol: "TCP"
+      port: 1515
+      targetPort: 8080
+  selector:
+    app: statistics-service
+    tier: microservice
