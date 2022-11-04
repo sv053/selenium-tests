@@ -83,5 +83,26 @@ public class FrontendTests {
         WebElement element = driver.findElement(By.id("main-link"));
         assertTrue(element.isDisplayed());
     }
+
+    @Test
+    public void clickNavBarMainLinkButtonSelected() {
+
+        WebElement element = driver.findElement(By.id("main-link"));
+        assertTrue(element.isSelected());
+    }
+
+    @Test
+    public void clickNavBarAccountLinkButtonSelected() {
+
+        WebElement element = driver.findElement(By.id("account-link"));
+        assertTrue(element.isSelected());
+    }
+
+    @Test
+    public void clickNavBarCartLinkButtonSelected() {
+
+        WebElement element = driver.findElement(By.id("cart-link"));
+        assertTrue(element.isSelected());
+    }
 }
 
