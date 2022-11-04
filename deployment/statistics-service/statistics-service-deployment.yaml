@@ -40,10 +40,16 @@ spec:
           value: prod
         - name: SERVER_PORT
           value: "8080"
-        - name: KAFKA_BOOTSTRAPADDRESS
+        - name: SPRING_KAFKA_CONSUMER_BOOTSTRAPSERVERS
           value: "kafka-service:9092"
-        - name: KAFKA_TOPIC
-          value: "order_statistics"
+        - name: SPRING_KAFKA_CONSUMER_GROUP_ID
+          value: "air"
+        - name: SPRING_KAFKA_AUTO_OFFSET_RESET
+          value: "earliest"  
+        - name: SPRING_KAFKA_KEY_DESERIALIZER
+          value: "org.apache.kafka.common.serialization.StringDeserializer" 
+        - name: SPRING_KAFKA_VALUE_DESERIALIZER
+          value: "org.apache.kafka.common.serialization.StringDeserializer"    
         - name: SPRING_DATASOURCE_URL
           valueFrom:
             secretKeyRef:
