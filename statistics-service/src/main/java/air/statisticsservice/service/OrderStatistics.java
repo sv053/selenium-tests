@@ -19,10 +19,10 @@ public class OrderStatistics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "average_per_day")
+    @Column(name = "average_per_day", nullable = false)
     private Long averagePerDay;
 
-    @Column(name = "average_per_day")
+    @Column(nullable = false)
     @JsonIgnore
     private Long orders;
 
