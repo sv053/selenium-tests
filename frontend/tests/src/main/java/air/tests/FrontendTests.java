@@ -1,14 +1,18 @@
 package air.tests;
 
 import air.tests.config.WebDriverFactory;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FrontendTests {
     private static WebDriver driver;
@@ -25,7 +29,38 @@ public class FrontendTests {
     }
 
     @Test
-    public void test() {
-        assertEquals(1, 1);
+    public void clickNavBrandMenuButtonIsDisplayed() {
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+        WebElement submitButton = driver.findElement(By.className("navbar-brand"));
+        assertTrue(submitButton.isDisplayed());
+    }
+
+    @Test
+    public void checkTitleLabel() {
+        String title = driver.getTitle();
+        assertEquals("Air Tickets", title);
+    }
+
+    @Test
+    public void clickNavBarMainLinkButton() {
+
+        WebElement element = driver.findElement(By.id("main-link"));
+        assertTrue(element.isEnabled());
+    }
+
+    @Test
+    public void clickNavBarAccountLinkButton() {
+
+        WebElement element = driver.findElement(By.id("account-link"));
+        assertTrue(element.isEnabled());
+    }
+
+    @Test
+    public void clickNavBarCartLinkButton() {
+
+        WebElement element = driver.findElement(By.id("cart-link"));
+        assertTrue(element.isEnabled());
     }
 }
+
