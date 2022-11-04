@@ -29,7 +29,7 @@ public class FrontendTests {
     }
 
     @Test
-    public void clickNavBrandMenuButtonIsDisplayed() {
+    public void checkNavBrandMenuButtonIsDisplayed() {
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
         WebElement submitButton = driver.findElement(By.className("navbar-brand"));
@@ -43,63 +43,63 @@ public class FrontendTests {
     }
 
     @Test
-    public void clickNavBarMainLinkButtonEnabled() {
+    public void checkNavBarMainLinkButtonEnabled() {
 
         WebElement element = driver.findElement(By.id("main-link"));
         assertTrue(element.isEnabled());
     }
 
     @Test
-    public void clickNavBarAccountLinkButtonEnabled() {
+    public void checkNavBarAccountLinkButtonEnabled() {
 
         WebElement element = driver.findElement(By.id("account-link"));
         assertTrue(element.isEnabled());
     }
 
     @Test
-    public void clickNavBarCartLinkButtonEnabled() {
+    public void checkNavBarCartLinkButtonEnabled() {
 
         WebElement element = driver.findElement(By.id("cart-link"));
         assertTrue(element.isEnabled());
     }
 
     @Test
-    public void clickNavBarCartLinkButtonDisplayed() {
+    public void checkNavBarCartLinkButtonDisplayed() {
 
         WebElement element = driver.findElement(By.id("cart-link"));
         assertTrue(element.isDisplayed());
     }
 
     @Test
-    public void clickNavBarAccountLinkButtonDisplayed() {
+    public void checkNavBarAccountLinkButtonDisplayed() {
 
         WebElement element = driver.findElement(By.id("account-link"));
         assertTrue(element.isDisplayed());
     }
 
     @Test
-    public void clickNavBarMainLinkButtonDisplayed() {
+    public void checkNavBarMainLinkButtonDisplayed() {
 
         WebElement element = driver.findElement(By.id("main-link"));
         assertTrue(element.isDisplayed());
     }
 
     @Test
-    public void clickNavBarMainLinkButtonSelected() {
+    public void checkNavBarMainLinkButtonSelected() {
 
         WebElement element = driver.findElement(By.id("main-link"));
         assertTrue(element.isSelected());
     }
 
     @Test
-    public void clickNavBarAccountLinkButtonSelected() {
+    public void checkNavBarAccountLinkButtonSelected() {
 
         WebElement element = driver.findElement(By.id("account-link"));
         assertTrue(element.isSelected());
     }
 
     @Test
-    public void clickNavBarCartLinkButtonSelected() {
+    public void checkNavBarCartLinkButtonSelected() {
 
         WebElement element = driver.findElement(By.id("cart-link"));
         assertTrue(element.isSelected());
