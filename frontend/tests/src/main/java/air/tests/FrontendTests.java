@@ -43,24 +43,45 @@ public class FrontendTests {
     }
 
     @Test
-    public void clickNavBarMainLinkButton() {
+    public void clickNavBarMainLinkButtonEnabled() {
 
         WebElement element = driver.findElement(By.id("main-link"));
         assertTrue(element.isEnabled());
     }
 
     @Test
-    public void clickNavBarAccountLinkButton() {
+    public void clickNavBarAccountLinkButtonEnabled() {
 
         WebElement element = driver.findElement(By.id("account-link"));
         assertTrue(element.isEnabled());
     }
 
     @Test
-    public void clickNavBarCartLinkButton() {
+    public void clickNavBarCartLinkButtonEnabled() {
 
         WebElement element = driver.findElement(By.id("cart-link"));
         assertTrue(element.isEnabled());
+    }
+
+    @Test
+    public void clickNavBarCartLinkButtonDisplayed() {
+
+        WebElement element = driver.findElement(By.id("cart-link"));
+        assertTrue(element.isDisplayed());
+    }
+
+    @Test
+    public void clickNavBarAccountLinkButtonDisplayed() {
+
+        WebElement element = driver.findElement(By.id("account-link"));
+        assertTrue(element.isDisplayed());
+    }
+
+    @Test
+    public void clickNavBarMainLinkButtonDisplayed() {
+
+        WebElement element = driver.findElement(By.id("main-link"));
+        assertTrue(element.isDisplayed());
     }
 }
 
