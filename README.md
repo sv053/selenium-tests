@@ -2,6 +2,11 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
+**Backend stack:** Java SE, Spring Framework, Apache Tomcat, Jackson, Maven, JUnit,
+Mockito, MySQL, H2, Hibernate, Docker, Kubernetes, Jenkins, Kafka.
+
+**Frontend stack:** JavaScript, React, HTML, CSS.
+
 ## Build
 
 ### Build the frontend
@@ -37,6 +42,18 @@ chmod +x deployment/minikube_run.sh
 ./deployment/minikube_run.sh
 ```
 Now you can access the application on http://localhost/
+
+## Use
+
+Airtickets lets you work with airlines, flights, tickets and tickets. It declares 2 user roles: admins and users.
+It's fully secured - e.g., only a user that created an airline can edit it's data and create flights and tickets
+for this airline, a user can log in only to his personal account, only administrators can see statistics and so on.
+<br>
+Airtickets provides one pre-assigned administrator with the following credentials:
+```
+email: airadmin@gmail.com
+password: jkhfdjk2323766
+```
 
 ## Public API
 All the endpoints follow the REST API Resource naming conventions.
@@ -93,13 +110,16 @@ which allow luggage
 * HTTP POST http://localhost/booking - create a new booking (autentication required)
 * HTTP DELETE http://localhost/booking/{id} - delete a booking with the specified ID (autentication required)
 
-## Screenshots
+### Statistics:
+* HTTP GET http://localhost/statistics/order - get order statistics (autentication required)
 
-#### Jenkins build:
-![jenkins](screenshots/jenkins.png)
+## Screenshots
 
 #### Kubernetes deployment:
 ![k8s](screenshots/k8s.png)
+
+#### Jenkins build:
+![jenkins](screenshots/jenkins.png)
 
 #### Flights:
 ![flights](screenshots/flights.png)
@@ -121,4 +141,3 @@ which allow luggage
 ![order](screenshots/order-details.png)
 ![order](screenshots/order-sign-in.png)
 ![order](screenshots/order-confirmed.png)
-

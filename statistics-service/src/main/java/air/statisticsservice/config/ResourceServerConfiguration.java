@@ -50,7 +50,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .mvcMatchers("/**")
             .and()
             .authorizeRequests()
-                .mvcMatchers("/**")
+                .mvcMatchers("/statistics/**")
                     .hasAuthority("ADMIN")
             .and()
             .sessionManagement()

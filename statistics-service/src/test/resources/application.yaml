@@ -6,9 +6,6 @@ h2:
   sql:
     init:
       platform: h2
-kafka:
-  bootstrapAddress: test
-  topic: test
 spring:
   jpa:
     show-sql: true
